@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATAfolio - Curare</title>
+    <script>
+        (() => {
+            const key = 'atafolio-dark-mode-preference';
+            const hour = new Date().getHours();
+            const fallbackDark = hour >= 19 || hour < 6;
+            try {
+                const stored = window.localStorage.getItem(key);
+                const shouldUseDark = stored === 'manual-on' ? true : stored === 'manual-off' ? false : fallbackDark;
+                if (shouldUseDark) document.documentElement.classList.add('dark-mode-boot');
+            } catch {
+                if (fallbackDark) document.documentElement.classList.add('dark-mode-boot');
+            }
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caesar+Dressing&family=Inter:wght@400;500;600&family=Jacquard+12&family=Jacquard+12+Charted&family=Mr+Bedfort&family=Playfair+Display:ital,wght@1,400&family=Sixtyfour&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+    <script>if (sessionStorage.getItem('project-transition')) document.documentElement.classList.add('project-transition-pending');</script>
+</head>
+<body class="theme-light project-page" data-project-slug="curare">
+    <div class="page-transition-overlay" id="play-page-transition-overlay"></div>
+    <header class="site-header">
+        <a href="index.html" class="logo"><span class="logo-wordmark"><span class="ata-text">ATA</span><span class="berkol-text">Be<span class="berkol-tail">rkol</span></span></span></a>
+        <div class="nav-links">
+            <div class="nav-link-wrapper"><a href="index.html" class="nav-link">Index</a><a href="index.html" class="nav-link" aria-hidden="true">Index</a></div>,
+            <div class="nav-link-wrapper"><a href="lab.html" class="nav-link">Play</a><a href="lab.html" class="nav-link" aria-hidden="true">Play</a></div>
+        </div>
+        <div class="contact-link"><div class="nav-link-wrapper"><a href="mailto:hello@example.com" class="underline-link">Send me a message</a><a href="mailto:hello@example.com" class="underline-link" aria-hidden="true">Send me a message</a></div></div>
+    </header>
+    <main class="project-detail-main">
+        <section class="project-detail-hero">
+            <div class="project-detail-title-block">
+                <h1 class="project-detail-title" id="project-detail-title">CURARE</h1>
+                <div class="project-detail-year" id="project-detail-year">(2025)</div>
+            </div>
+            <div class="project-detail-meta">
+                <div><div class="project-detail-meta-label">Scope</div><div class="project-detail-meta-value" id="project-detail-services">[GAMING]</div></div>
+                <div><div class="project-detail-meta-label">Client</div><div class="project-detail-meta-value" id="project-detail-client">[CURARE]</div></div>
+                <div><div class="project-detail-meta-label">Agency</div><div class="project-detail-meta-value" id="project-detail-agency">[ATAFOLIO]</div></div>
+            </div>
+        </section>
+        <section class="project-detail-media" id="project-detail-media"></section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

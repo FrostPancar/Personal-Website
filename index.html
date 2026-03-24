@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATAfolio - Visual Artist</title>
+    <script>
+        (() => {
+            const key = 'atafolio-dark-mode-preference';
+            const hour = new Date().getHours();
+            const fallbackDark = hour >= 19 || hour < 6;
+            try {
+                const stored = window.localStorage.getItem(key);
+                const shouldUseDark = stored === 'manual-on' ? true : stored === 'manual-off' ? false : fallbackDark;
+                if (shouldUseDark) document.documentElement.classList.add('dark-mode-boot');
+            } catch {
+                if (fallbackDark) document.documentElement.classList.add('dark-mode-boot');
+            }
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caesar+Dressing&family=Inter:wght@400;500;600&family=Jacquard+12&family=Jacquard+12+Charted&family=Mr+Bedfort&family=Playfair+Display:ital,wght@1,400&family=Sixtyfour&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+</head>
+<body class="theme-light index-page">
+    <div class="page-transition-overlay" id="play-page-transition-overlay"></div>
+    <div class="index-intro" id="index-intro"></div>
+
+    <header class="site-header">
+        <a href="index.html" class="logo"><span>Visual Designer, Creative Technologist.</span></a>
+        <div class="nav-links">
+            <div class="nav-link-wrapper"><a href="index.html" class="nav-link">Index</a><a href="index.html" class="nav-link" aria-hidden="true">Index</a></div>,
+            <div class="nav-link-wrapper"><a href="lab.html" class="nav-link">Play</a><a href="lab.html" class="nav-link" aria-hidden="true">Play</a></div>
+        </div>
+        <div class="contact-link">
+            <div class="nav-link-wrapper">
+                <a href="mailto:hello@example.com" class="underline-link">Send me a message</a>
+                <a href="mailto:hello@example.com" class="underline-link" aria-hidden="true">Send me a message</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-lorem-band" aria-hidden="true">
+        <p>Ata Berkol is a Chicago-based designer working across identity and interactive systems. He aims for clarity, creating work that is both expressive and precise.</p>
+        <p>This portfolio collects brand work, UI systems, and direction from a studio practice sustained since 2020 through collabs with creative partners.</p>
+    </div>
+
+    <main class="scroll-container">
+        <div class="scroll-content" id="index-scroll-content">
+            <div class="project-item" data-project-slug="residee" data-project-url="residee.html" data-slideshow="Images/Projects/Residee/Residee_Thumbnail.webp|Images/Projects/Residee/slideshow/Slide.webp|Images/Projects/Residee/slideshow/Slide1.webp|Images/Projects/Residee/slideshow/Slide2.webp">
+                <div class="project-meta top-meta">
+                    <span class="project-title">Résidée</span>
+                    <span class="project-type">[HARDWARE]</span>
+                </div>
+                <div class="project-image-wrapper">
+                    <img class="project-image" src="Images/Projects/Residee/Residee_Thumbnail.webp" alt="Résidée thumbnail" loading="lazy" decoding="async">
+                </div>
+            </div>
+
+            <div class="project-item" data-project-slug="sitch-nyc" data-project-url="sitch-nyc.html" data-slideshow="Images/Projects/Sitch/Sitch_Thumbnail.webp|Images/Projects/Sitch/slideshow/Slide.webp|Images/Projects/Sitch/slideshow/Slide1.webp">
+                <div class="project-meta top-meta">
+                    <span class="project-title">Sitch NYC</span>
+                    <span class="project-type">[LIQUID]</span>
+                </div>
+                <div class="project-image-wrapper">
+                    <img class="project-image" src="Images/Projects/Sitch/Sitch_Thumbnail.webp" alt="Sitch NYC thumbnail" loading="lazy" decoding="async">
+                </div>
+            </div>
+
+            <div class="project-item" data-project-slug="macho-genie" data-project-url="macho-genie.html" data-slideshow="Images/Projects/Macho-Genie/Thumbnail.webp|Images/Projects/Macho-Genie/slideshow/Slide.webp|Images/Projects/Macho-Genie/slideshow/Slide1.webp|Images/Projects/Macho-Genie/slideshow/Slide2.webp">
+                <div class="project-meta top-meta">
+                    <span class="project-title">Macho Genie</span>
+                    <span class="project-type">[WELLNESS]</span>
+                </div>
+                <div class="project-image-wrapper">
+                    <img class="project-image" src="Images/Projects/Macho-Genie/Thumbnail.webp" alt="Macho Genie thumbnail" loading="lazy" decoding="async">
+                </div>
+            </div>
+
+            <div class="project-item" data-project-slug="mosu" data-project-url="mosu.html" data-slideshow="Images/Projects/Mosu/Mosu_Thumbnail.webp|Images/Projects/Mosu/slideshow/Slide1.webp|Images/Projects/Mosu/slideshow/Slide2.webp">
+                <div class="project-meta top-meta">
+                    <span class="project-title">Mosu</span>
+                    <span class="project-type">[LIGHTING]</span>
+                </div>
+                <div class="project-image-wrapper">
+                    <img class="project-image" src="Images/Projects/Mosu/Mosu_Thumbnail.webp" alt="Mosu thumbnail" loading="lazy" decoding="async">
+                </div>
+            </div>
+
+            <div class="project-item" data-project-slug="highmark" data-project-url="highmark.html" data-slideshow="Images/Projects/Highmark/Highmark_Thumbnail.png|Images/Projects/Highmark/slideshow/Slide.png|Images/Projects/Highmark/slideshow/Slide1.png|Images/Projects/Highmark/slideshow/Slide2.png">
+                <div class="project-meta top-meta">
+                    <span class="project-title">Highmark</span>
+                    <span class="project-type">[BEAUTY]</span>
+                </div>
+                <div class="project-image-wrapper">
+                    <img class="project-image" src="Images/Projects/Highmark/Highmark_Thumbnail.png" alt="Highmark thumbnail" loading="lazy" decoding="async">
+                </div>
+            </div>
+
+            <div class="project-item" data-project-slug="curare" data-project-url="curare.html" data-slideshow="Images/Projects/Curare/Curare_Thumbnail.webp|Images/Projects/Curare/slideshow/Slide.webp|Images/Projects/Curare/slideshow/Slide2.webp">
+                <div class="project-meta top-meta">
+                    <span class="project-title">Curare</span>
+                    <span class="project-type">[GAMING]</span>
+                </div>
+                <div class="project-image-wrapper">
+                    <img class="project-image" src="Images/Projects/Curare/Curare_Thumbnail.webp" alt="Curare thumbnail" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="list-view-container" id="project-list-view">
+        <div class="preview-panel" id="list-preview-panel"></div>
+        <div class="text-mask">
+            <div class="text-cloud" id="project-text-cloud"></div>
+        </div>
+    </div>
+
+    <div class="bottom-footer" id="main-footer">
+        <div class="massive-text-container">
+            <div class="branding-row">
+                <p class="branding-intro">
+                    <span class="branding-intro-base">Ata Berkol is an Independent Designer and Creative Techie based in Chicago.</span>
+                    <span class="branding-intro-expanded">Ata Berkol is an Independent Designer and Creative Techie based in Chicago. His current carry-on books are Wuthering Heights by Emily Bronte and How to Write About Contemporary Art by Gilda Williams. He's currently obsessed with the design philosophy of Super Normal by Naoto Fukasawa and Jasper Morrison. He's originally from Istanbul.</span>
+                </p>
+                <div class="mobile-wordmark-scroller" id="mobile-wordmark-scroller">
+                    <div class="mobile-wordmark-scroll-inner" id="mobile-wordmark-scroll-inner">
+                        <h1 class="watermark-text-large" id="watermark-text-large">
+                            <span class="watermark-motion-shell" id="watermark-motion-shell">
+                                <span class="watermark-word-mask watermark-word-mask-ata"><span class="ata-text" id="ata-text">ATA</span></span>
+                                <span class="watermark-word-mask watermark-word-mask-berkol"><span class="berkol-text">Be<span class="berkol-tail">rkol</span></span></span>
+                            </span>
+                            <span class="mobile-wordmark-copy">is an Independent Designer and Creative Technologist based in Chicago. His current carry-on books are Wuthering Heights by Emily Bronte and How to Write About Contemporary Art by Gilda Williams. He's currently obsessed with the design philosophy of Super Normal by Naoto Fukasawa and Jasper Morrison. He's originally from Istanbul.</span>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-top-row" id="footer-controls">
+        <div class="footer-nav">
+            <div class="nav-link-wrapper active-footer"><span class="nav-link" id="toggle-carousel">Carousel</span><span class="nav-link" aria-hidden="true">Carousel</span></div>
+            <div class="nav-link-wrapper"><span class="nav-link" id="toggle-list">List</span><span class="nav-link" aria-hidden="true">List</span></div>
+        </div>
+        <div class="location-time-wrapper">
+            <div class="footer-mode-controls">
+                <div class="nav-link-wrapper"><span class="nav-link" id="ada-mode-toggle">"A" ADA Mode</span><span class="nav-link" aria-hidden="true">"A" ADA Mode</span></div>
+                <div class="nav-link-wrapper"><span class="nav-link" id="dark-mode-toggle">"D" Toggle Dark</span><span class="nav-link" aria-hidden="true">"D" Toggle Dark</span></div>
+            </div>
+            <span>
+                <span class="nav-link-wrapper">
+                    <span class="underline-link">Chicago, US</span>
+                    <span class="underline-link" aria-hidden="true">Chicago, US</span>
+                </span>
+                <span id="cst-clock" style="margin-left: 1rem;">12<span class="blink">:</span>00</span>
+            </span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

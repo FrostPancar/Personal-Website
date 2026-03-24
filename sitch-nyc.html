@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATAfolio - Sitch NYC</title>
+    <script>
+        (() => {
+            const key = 'atafolio-dark-mode-preference';
+            const hour = new Date().getHours();
+            const fallbackDark = hour >= 19 || hour < 6;
+            try {
+                const stored = window.localStorage.getItem(key);
+                const shouldUseDark = stored === 'manual-on' ? true : stored === 'manual-off' ? false : fallbackDark;
+                if (shouldUseDark) document.documentElement.classList.add('dark-mode-boot');
+            } catch {
+                if (fallbackDark) document.documentElement.classList.add('dark-mode-boot');
+            }
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caesar+Dressing&family=Inter:wght@400;500;600&family=Jacquard+12&family=Jacquard+12+Charted&family=Mr+Bedfort&family=Playfair+Display:ital,wght@1,400&family=Sixtyfour&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+    <script>if (sessionStorage.getItem('project-transition')) document.documentElement.classList.add('project-transition-pending');</script>
+</head>
+<body class="theme-light project-page case-study-page" data-project-slug="sitch-nyc">
+    <div class="page-transition-overlay" id="play-page-transition-overlay"></div>
+    <header class="site-header">
+        <a href="index.html" class="logo"><span class="logo-wordmark"><span class="ata-text">ATA</span><span class="berkol-text">Be<span class="berkol-tail">rkol</span></span></span></a>
+        <div class="nav-links">
+            <div class="nav-link-wrapper"><a href="index.html" class="nav-link">Index</a><a href="index.html" class="nav-link" aria-hidden="true">Index</a></div>,
+            <div class="nav-link-wrapper"><a href="lab.html" class="nav-link">Play</a><a href="lab.html" class="nav-link" aria-hidden="true">Play</a></div>
+        </div>
+        <div class="contact-link">
+            <div class="nav-link-wrapper">
+                <a href="mailto:hello@example.com" class="underline-link">Send me a message</a>
+                <a href="mailto:hello@example.com" class="underline-link" aria-hidden="true">Send me a message</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="project-detail-main case-study-main">
+        <section class="case-study-slide case-study-slide-intro" id="case-study-intro">
+            <div class="case-study-hero">
+                <div class="case-study-title-block">
+                    <div class="case-study-kicker">Brand System Case Study</div>
+                    <div class="case-study-title-mask">
+                        <div class="case-study-title-row">
+                            <h1 class="case-study-title">Sitch NYC</h1>
+                        </div>
+                    </div>
+                    <div class="case-study-year-mask">
+                        <div class="case-study-year">(2024)</div>
+                    </div>
+                </div>
+                <div class="case-study-meta">
+                    <div>
+                        <div class="case-study-meta-label">Scope</div>
+                        <div class="case-study-meta-value">Identity, Web, Social</div>
+                    </div>
+                    <div>
+                        <div class="case-study-meta-label">Role</div>
+                        <div class="case-study-meta-value">Creative Direction</div>
+                    </div>
+                </div>
+                <div class="case-study-index">
+                    <div class="case-study-index-title">Index</div>
+                    <ol class="case-study-index-list">
+                        <li><a href="#project-overview">Project overview</a></li>
+                        <li><a href="#challenge">Challenge</a></li>
+                        <li><a href="#creative-direction">Creative direction</a></li>
+                        <li><a href="#web-design">Web design</a></li>
+                        <li><a href="#social-toolkit">Social toolkit</a></li>
+                        <li><a href="#rollout">Rollout across channels</a></li>
+                        <li><a href="#outcome">Outcome</a></li>
+                    </ol>
+                </div>
+                <div class="case-study-slide-copy case-study-overview-desktop" aria-hidden="true">
+                    <div class="case-study-section">
+                        <div class="case-study-section-number">01</div>
+                        <div class="case-study-section-body">
+                            <h2>Project overview</h2>
+                            <p>Sitch NYC needed a sharper public face for a fast-moving drinks brand: something that could live equally well on the web, in launch assets, and across social content without losing its edge.</p>
+                            <div class="case-study-overview-meta">
+                                <div>
+                                    <div class="case-study-meta-label">Scope</div>
+                                    <div class="case-study-meta-value">Identity, Web, Social</div>
+                                </div>
+                                <div>
+                                    <div class="case-study-meta-label">Role</div>
+                                    <div class="case-study-meta-value">Creative Direction</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="case-study-slide case-study-slide-overview" id="project-overview">
+            <button class="case-study-next-arrow case-study-slide-arrow" type="button" data-case-study-next aria-label="Next section">➔</button>
+            <div class="case-study-section">
+                <div class="case-study-section-number">01</div>
+                <div class="case-study-section-body">
+                    <h2>Project overview</h2>
+                    <p>Sitch NYC needed a sharper public face for a fast-moving drinks brand: something that could live equally well on the web, in launch assets, and across social content without losing its edge.</p>
+                </div>
+            </div>
+            <figure class="case-study-placeholder case-study-placeholder-wide has-media">
+                <img class="case-study-placeholder-image" src="Images/Sitch/Portfolio/Cover.png" alt="Sitch NYC project overview hero">
+                <div class="case-study-placeholder-label">Project overview</div>
+                <div class="case-study-placeholder-caption">Hero campaign composition / landing-page lead visual.</div>
+            </figure>
+        </section>
+
+        <section class="case-study-slide" id="challenge">
+            <button class="case-study-next-arrow case-study-slide-arrow" type="button" data-case-study-next aria-label="Next section">➔</button>
+            <div class="case-study-section">
+                <div class="case-study-section-number">02</div>
+                <div class="case-study-section-body">
+                    <h2>Challenge</h2>
+                    <p>The system had to feel immediate and culturally tuned, but also stay organized enough to scale across campaign drops, product storytelling, and quick-turn marketing needs.</p>
+                </div>
+            </div>
+            <figure class="case-study-placeholder case-study-placeholder-tall has-media">
+                <img class="case-study-placeholder-image" src="Images/Sitch/Website/Hero.png" alt="Sitch NYC challenge reference">
+                <div class="case-study-placeholder-label">Challenge</div>
+                <div class="case-study-placeholder-caption">Before / after audit, references, and structural pain points.</div>
+            </figure>
+        </section>
+
+        <section class="case-study-slide" id="creative-direction">
+            <button class="case-study-next-arrow case-study-slide-arrow" type="button" data-case-study-next aria-label="Next section">➔</button>
+            <div class="case-study-section">
+                <div class="case-study-section-number">03</div>
+                <div class="case-study-section-body">
+                    <h2>Creative direction</h2>
+                    <p>The direction focused on a clean but charged visual language: bold contrast, editorial typography, and a flexible framing system that could hold photography, copy, and product equally well.</p>
+                </div>
+            </div>
+            <figure class="case-study-placeholder case-study-placeholder-grid has-media">
+                <img class="case-study-placeholder-image" src="Images/Sitch/Portfolio/SitchCover.png" alt="Sitch NYC creative direction">
+                <div class="case-study-placeholder-label">Creative direction</div>
+                <div class="case-study-placeholder-caption">Direction boards, typography tests, and key art frames.</div>
+            </figure>
+        </section>
+
+        <section class="case-study-slide" id="web-design">
+            <button class="case-study-next-arrow case-study-slide-arrow" type="button" data-case-study-next aria-label="Next section">➔</button>
+            <div class="case-study-section">
+                <div class="case-study-section-number">04</div>
+                <div class="case-study-section-body">
+                    <h2>Web design</h2>
+                    <p>The site system translated the brand logic into a modular interface, balancing strong type with modular content blocks that could flex between campaigns, launches, and evergreen storytelling.</p>
+                </div>
+            </div>
+            <figure class="case-study-placeholder case-study-placeholder-wide has-media">
+                <img class="case-study-placeholder-image" src="Images/Sitch/Website/Section 2.png" alt="Sitch NYC web design module">
+                <div class="case-study-placeholder-label">Web design</div>
+                <div class="case-study-placeholder-caption">Homepage, PDP, and modular section design placeholders.</div>
+            </figure>
+        </section>
+
+        <section class="case-study-slide" id="social-toolkit">
+            <button class="case-study-next-arrow case-study-slide-arrow" type="button" data-case-study-next aria-label="Next section">➔</button>
+            <div class="case-study-section">
+                <div class="case-study-section-number">05</div>
+                <div class="case-study-section-body">
+                    <h2>Social toolkit</h2>
+                    <p>A simple toolkit of templates, crops, type rules, and pacing devices made it possible to produce a broad range of social assets while keeping the output coherent across channels.</p>
+                </div>
+            </div>
+            <figure class="case-study-placeholder case-study-placeholder-grid has-media">
+                <img class="case-study-placeholder-image" src="Images/Sitch/Socials/Poster.png" alt="Sitch NYC social toolkit">
+                <div class="case-study-placeholder-label">Social toolkit</div>
+                <div class="case-study-placeholder-caption">Story cards, reels covers, feed posts, and promo variants.</div>
+            </figure>
+        </section>
+
+        <section class="case-study-slide" id="rollout">
+            <button class="case-study-next-arrow case-study-slide-arrow" type="button" data-case-study-next aria-label="Next section">➔</button>
+            <div class="case-study-section">
+                <div class="case-study-section-number">06</div>
+                <div class="case-study-section-body">
+                    <h2>Rollout across channels</h2>
+                    <p>Once the foundation was established, the system could extend across launch collateral, email, campaign messaging, and platform-specific touchpoints without needing to be reinvented each time.</p>
+                </div>
+            </div>
+            <figure class="case-study-placeholder case-study-placeholder-wide has-media">
+                <img class="case-study-placeholder-image" src="Images/Sitch/Website/Testimonials.png" alt="Sitch NYC rollout across channels">
+                <div class="case-study-placeholder-label">Rollout</div>
+                <div class="case-study-placeholder-caption">Cross-channel rollout showing web, social, and campaign outputs.</div>
+            </figure>
+        </section>
+
+        <section class="case-study-slide" id="outcome">
+            <div class="case-study-section">
+                <div class="case-study-section-number">07</div>
+                <div class="case-study-section-body">
+                    <h2>Outcome</h2>
+                    <p>The resulting system gave Sitch NYC a stronger brand presence and a more consistent toolkit for launch moments, everyday updates, and future growth across the brand ecosystem.</p>
+                </div>
+            </div>
+            <figure class="case-study-placeholder case-study-placeholder-tall has-media">
+                <img class="case-study-placeholder-image" src="Images/Sitch/Portfolio/Feed 3.png" alt="Sitch NYC final outcome">
+                <div class="case-study-placeholder-label">Outcome</div>
+                <div class="case-study-placeholder-caption">Final showcase stack and rollout summary.</div>
+            </figure>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
