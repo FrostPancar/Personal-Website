@@ -27,7 +27,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
     <script>if (sessionStorage.getItem('project-transition')) document.documentElement.classList.add('project-transition-pending');</script>
 </head>
-<body class="theme-light project-page" data-project-slug="mosu">
+<body class="theme-light project-page case-study-page" data-project-slug="mosu">
     <div class="page-transition-overlay" id="play-page-transition-overlay"></div>
     <header class="site-header">
         <a href="index.html" class="logo"><span class="logo-wordmark"><span class="ata-text">ATA</span><span class="berkol-text">Be<span class="berkol-tail">rkol</span></span></span></a>
@@ -35,22 +35,180 @@
             <div class="nav-link-wrapper"><a href="index.html" class="nav-link">Index</a><a href="index.html" class="nav-link" aria-hidden="true">Index</a></div>,
             <div class="nav-link-wrapper"><a href="lab.html" class="nav-link">Play</a><a href="lab.html" class="nav-link" aria-hidden="true">Play</a></div>
         </div>
-        <div class="contact-link"><div class="nav-link-wrapper"><a href="mailto:hello@example.com" class="underline-link">Send me a message</a><a href="mailto:hello@example.com" class="underline-link" aria-hidden="true">Send me a message</a></div></div>
-    </header>
-    <main class="project-detail-main">
-        <section class="project-detail-hero">
-            <div class="project-detail-title-block">
-                <h1 class="project-detail-title" id="project-detail-title">MOSU</h1>
-                <div class="project-detail-year" id="project-detail-year">(2024)</div>
+        <div class="contact-link">
+            <div class="nav-link-wrapper">
+                <a href="mailto:hello@example.com" class="underline-link">Send me a message</a>
+                <a href="mailto:hello@example.com" class="underline-link" aria-hidden="true">Send me a message</a>
             </div>
-            <div class="project-detail-meta">
-                <div><div class="project-detail-meta-label">Scope</div><div class="project-detail-meta-value" id="project-detail-services">[LIGHTING]</div></div>
-                <div><div class="project-detail-meta-label">Client</div><div class="project-detail-meta-value" id="project-detail-client">[MOSU]</div></div>
-                <div><div class="project-detail-meta-label">Agency</div><div class="project-detail-meta-value" id="project-detail-agency">[ATAFOLIO]</div></div>
+        </div>
+    </header>
+
+    <main class="project-detail-main case-study-main">
+        <section class="case-study-slide case-study-slide-intro" id="case-study-intro">
+            <div class="case-study-hero">
+                <div class="case-study-title-block">
+                    <div class="case-study-kicker">Founder-Led Product Venture</div>
+                    <div class="case-study-title-mask">
+                        <div class="case-study-title-row">
+                            <h1 class="case-study-title">MOSU</h1>
+                        </div>
+                    </div>
+                    <div class="case-study-year-mask">
+                        <div class="case-study-year">(2020)</div>
+                    </div>
+                </div>
+                <div class="case-study-index">
+                    <div class="case-study-index-title">Index</div>
+                    <ol class="case-study-index-list">
+                        <li><a href="#overview">Overview</a></li>
+                        <li><a href="#challenge">Challenge</a></li>
+                        <li><a href="#product-system">Product system</a></li>
+                        <li><a href="#brand-commerce">Brand and commerce</a></li>
+                        <li><a href="#storytelling">Storytelling assets</a></li>
+                        <li><a href="#outcome">Outcome</a></li>
+                    </ol>
+                </div>
+                <div class="case-study-slide-copy case-study-overview-desktop" aria-hidden="true">
+                    <div class="case-study-section">
+                        <div class="case-study-section-number">01</div>
+                        <div class="case-study-section-body">
+                            <h2>Overview</h2>
+                            <p>MOSU was a material-driven design venture I built from concept to object to storefront, bringing together product design, brand storytelling, and digital commerce as one connected system.</p>
+                            <div class="case-study-overview-meta">
+                                <div>
+                                    <div class="case-study-meta-label">Scope</div>
+                                    <div class="case-study-meta-value">Product, Brand, Ecommerce</div>
+                                </div>
+                                <div>
+                                    <div class="case-study-meta-label">Role</div>
+                                    <div class="case-study-meta-value">Founder and Design Lead</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="case-study-slide-nav">
+                <button class="case-study-next-arrow case-study-slide-arrow" type="button" data-case-study-next aria-label="Next section">➔</button>
             </div>
         </section>
-        <section class="project-detail-media" id="project-detail-media"></section>
+
+        <section class="case-study-slide case-study-slide-overview" id="overview">
+            <div class="case-study-section">
+                <div class="case-study-section-number">01</div>
+                <div class="case-study-section-body">
+                    <h2>Overview</h2>
+                    <p>MOSU was a material-driven design venture built from concept to object to storefront. The project combined material research, additive manufacturing, object design, and a consumer-facing storefront into one connected system.</p>
+                    <div class="case-study-overview-meta">
+                        <div>
+                            <div class="case-study-meta-label">Scope</div>
+                            <div class="case-study-meta-value">Product Design, Brand Direction, Ecommerce, Rendering</div>
+                        </div>
+                        <div>
+                            <div class="case-study-meta-label">Role</div>
+                            <div class="case-study-meta-value">Founder and Design Lead</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <figure class="case-study-placeholder case-study-placeholder-wide has-media">
+                <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/01.webp" alt="MOSU overview hero">
+                <div class="case-study-placeholder-label">Overview</div>
+                <div class="case-study-placeholder-caption">Use a strongest hero image here: one wide composition showing the most iconic product or collection in a polished, campaign-level frame.</div>
+            </figure>
+            <div class="case-study-slide-nav">
+                <button class="case-study-next-arrow case-study-slide-arrow" type="button" data-case-study-next aria-label="Next section">➔</button>
+            </div>
+        </section>
+
+        <section class="case-study-slide" id="challenge">
+            <div class="case-study-section">
+                <div class="case-study-section-number">02</div>
+                <div class="case-study-section-body">
+                    <h2>Challenge</h2>
+                    <p>The challenge was to create a business where environmental thinking and aesthetic appeal reinforced each other. The products, visual language, and storefront all needed to feel coherent while still working within the practical constraints of 3D printing and a small founder-led launch.</p>
+                </div>
+            </div>
+            <figure class="case-study-placeholder case-study-placeholder-tall has-media">
+                <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/02.webp" alt="MOSU challenge frame">
+                <div class="case-study-placeholder-label">Challenge</div>
+                <div class="case-study-placeholder-caption">Best image type for this slot: process collage, early material studies, printer/fabrication context, or a visual showing the tension between sustainability, production limits, and desirability.</div>
+            </figure>
+            <div class="case-study-slide-nav">
+                <button class="case-study-next-arrow case-study-slide-arrow" type="button" data-case-study-next aria-label="Next section">➔</button>
+            </div>
+        </section>
+
+        <section class="case-study-slide" id="product-system">
+            <div class="case-study-section">
+                <div class="case-study-section-number">03</div>
+                <div class="case-study-section-body">
+                    <h2>Product system</h2>
+                    <p>I treated the objects as both functional products and sculptural artifacts. Form, texture, and silhouette were shaped by fabrication logic, material behavior, and the physical character of additive manufacturing rather than being designed first and rationalized later.</p>
+                </div>
+            </div>
+            <figure class="case-study-placeholder case-study-placeholder-grid has-media">
+                <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/01.webp" alt="MOSU product system">
+                <div class="case-study-placeholder-label">Product system</div>
+                <div class="case-study-placeholder-caption">Upload product-family imagery here: multiple objects together, detail crops, texture shots, or a sheet showing how the forms relate as a collection.</div>
+            </figure>
+            <div class="case-study-slide-nav">
+                <button class="case-study-next-arrow case-study-slide-arrow" type="button" data-case-study-next aria-label="Next section">➔</button>
+            </div>
+        </section>
+
+        <section class="case-study-slide" id="brand-commerce">
+            <div class="case-study-section">
+                <div class="case-study-section-number">04</div>
+                <div class="case-study-section-body">
+                    <h2>Brand and commerce</h2>
+                    <p>The digital experience was designed to extend the product story rather than simply display inventory. The brand language, renders, product framing, and interface structure worked together to position MOSU as a thoughtful design venture rather than a hobbyist storefront.</p>
+                </div>
+            </div>
+            <figure class="case-study-placeholder case-study-placeholder-wide has-media">
+                <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/02.webp" alt="MOSU brand and commerce">
+                <div class="case-study-placeholder-label">Brand and commerce</div>
+                <div class="case-study-placeholder-caption">Best fit here: homepage or shop screenshots, PDP layouts, brand assets, packaging comps, or any visual showing how the objects were translated into a sellable online experience.</div>
+            </figure>
+            <div class="case-study-slide-nav">
+                <button class="case-study-next-arrow case-study-slide-arrow" type="button" data-case-study-next aria-label="Next section">➔</button>
+            </div>
+        </section>
+
+        <section class="case-study-slide" id="storytelling">
+            <div class="case-study-section">
+                <div class="case-study-section-number">05</div>
+                <div class="case-study-section-body">
+                    <h2>Storytelling assets</h2>
+                    <p>MOSU needed to communicate not only what the products were, but why they existed. That meant building a visual system around renders, product imagery, and editorial framing that could give the venture a clear point of view and make the sustainability story feel tangible rather than abstract.</p>
+                </div>
+            </div>
+            <figure class="case-study-placeholder case-study-placeholder-tall has-media">
+                <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/01.webp" alt="MOSU storytelling assets">
+                <div class="case-study-placeholder-label">Storytelling</div>
+                <div class="case-study-placeholder-caption">Use editorial-style supporting assets here: campaign renders, social tiles, launch posters, packaging inserts, close-up product photography, or material narrative graphics.</div>
+            </figure>
+            <div class="case-study-slide-nav">
+                <button class="case-study-next-arrow case-study-slide-arrow" type="button" data-case-study-next aria-label="Next section">➔</button>
+            </div>
+        </section>
+
+        <section class="case-study-slide" id="outcome">
+            <div class="case-study-section">
+                <div class="case-study-section-number">06</div>
+                <div class="case-study-section-body">
+                    <h2>Outcome</h2>
+                    <p>MOSU became both a business experiment and a multidisciplinary design exercise. It showed how sustainable thinking could shape the object, the narrative, and the customer experience at the same time, across a full system rather than a single deliverable.</p>
+                </div>
+            </div>
+            <figure class="case-study-placeholder case-study-placeholder-wide has-media">
+                <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/02.webp" alt="MOSU outcome summary">
+                <div class="case-study-placeholder-label">Outcome</div>
+                <div class="case-study-placeholder-caption">Finish with a strongest summary image: the most resolved product shot, storefront composite, or brand-world collage that makes the venture feel complete and real.</div>
+            </figure>
+        </section>
     </main>
+
     <script src="script.js"></script>
 </body>
 </html>

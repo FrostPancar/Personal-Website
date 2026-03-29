@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATAfolio - Visual Artist</title>
+    <title>ATAfolio - Studio Practice</title>
     <script>
         (() => {
             const key = 'atafolio-dark-mode-preference';
@@ -26,8 +26,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
 </head>
-<body class="theme-light index-page">
+<body class="theme-light index-page index-intro-pending">
     <div class="page-transition-overlay" id="play-page-transition-overlay"></div>
+    <div class="intro-loading" id="intro-loading" aria-hidden="true">
+        <div class="intro-loading-bar">
+            <div class="intro-loading-fill" id="intro-loading-fill"></div>
+        </div>
+    </div>
     <div class="index-intro" id="index-intro"></div>
 
     <header class="site-header">
