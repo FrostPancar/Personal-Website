@@ -1988,6 +1988,10 @@ body[data-project-slug="sitch-nyc"] .case-study-media-frame .case-study-placehol
     object-fit: contain;
 }
 
+body[data-project-slug="sitch-nyc"] .case-study-media-frame picture {
+    display: block;
+}
+
 body[data-project-slug="macho-genie"] .case-study-media-frame {
     position: relative;
     margin: 0;
