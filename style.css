@@ -2011,6 +2011,10 @@ body[data-project-slug="macho-genie"] .case-study-media-frame .case-study-placeh
     object-fit: contain;
 }
 
+body[data-project-slug="macho-genie"] .case-study-media-frame picture {
+    display: block;
+}
+
 body.dark-mode.case-study-page .case-study-index,
 body.dark-mode.case-study-page .case-study-meta,
 body.dark-mode.case-study-page .case-study-placeholder {
