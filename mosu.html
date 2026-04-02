@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#efedf0">
     <title>ATAfolio - Mosu</title>
     <script>
         (() => {
             const key = 'atafolio-dark-mode-preference';
-            const hour = new Date().getHours();
-            const fallbackDark = hour >= 19 || hour < 6;
             try {
                 const stored = window.localStorage.getItem(key);
-                const shouldUseDark = stored === 'manual-on' ? true : stored === 'manual-off' ? false : fallbackDark;
-                if (shouldUseDark) document.documentElement.classList.add('dark-mode-boot');
-            } catch {
-                if (fallbackDark) document.documentElement.classList.add('dark-mode-boot');
-            }
+                if (stored === 'manual-on') document.documentElement.classList.add('dark-mode-boot');
+            } catch {}
         })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +23,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
     <script>if (sessionStorage.getItem('project-transition')) document.documentElement.classList.add('project-transition-pending');</script>
 </head>
-<body class="theme-light project-page case-study-page" data-project-slug="mosu">
+<body class="theme-light project-page case-study-page case-study-load-pending" data-project-slug="mosu">
     <div class="page-transition-overlay" id="play-page-transition-overlay"></div>
     <header class="site-header">
         <a href="index.html" class="logo"><span class="logo-wordmark"><span class="ata-text">ATA</span><span class="berkol-text">Be<span class="berkol-tail">rkol</span></span></span></a>
@@ -47,7 +43,7 @@
         <section class="case-study-slide case-study-slide-intro" id="case-study-intro">
             <div class="case-study-hero">
                 <div class="case-study-title-block">
-                    <div class="case-study-kicker">Founder-Led Product Venture</div>
+                    <div class="case-study-kicker">Sustainable Design Venture</div>
                     <div class="case-study-title-mask">
                         <div class="case-study-title-row">
                             <h1 class="case-study-title">MOSU</h1>
@@ -111,10 +107,11 @@
                     </div>
                 </div>
             </div>
-            <figure class="case-study-placeholder case-study-placeholder-wide has-media">
-                <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/01.webp" alt="MOSU overview hero">
-                <div class="case-study-placeholder-label">Overview</div>
-                <div class="case-study-placeholder-caption">Use a strongest hero image here: one wide composition showing the most iconic product or collection in a polished, campaign-level frame.</div>
+            <figure class="case-study-media-frame">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Mosu/mobile-details/Intro.webp">
+                    <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/Intro.webp" alt="MOSU overview hero">
+                </picture>
             </figure>
             <div class="case-study-slide-nav">
                 <button class="case-study-next-arrow case-study-slide-arrow" type="button" data-case-study-next aria-label="Next section">➔</button>
@@ -129,10 +126,11 @@
                     <p>The challenge was to build a venture where making, environmental thinking, and public engagement reinforced one another rather than pulling in separate directions. That meant designing not just the objects, but also the logistical and social system around them, so the storefront, production process, and supporter-researcher community could operate as one connected structure.</p>
                 </div>
             </div>
-            <figure class="case-study-placeholder case-study-placeholder-tall has-media">
-                <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/02.webp" alt="MOSU challenge frame">
-                <div class="case-study-placeholder-label">Challenge</div>
-                <div class="case-study-placeholder-caption">Best image type for this slot: process collage, early material studies, printer/fabrication context, or a visual showing the tension between sustainability, production limits, and desirability.</div>
+            <figure class="case-study-media-frame">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Mosu/mobile-details/Challenge.webp">
+                    <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/Challenge.webp" alt="MOSU challenge frame">
+                </picture>
             </figure>
             <div class="case-study-slide-nav">
                 <button class="case-study-next-arrow case-study-slide-arrow" type="button" data-case-study-next aria-label="Next section">➔</button>
@@ -147,10 +145,11 @@
                     <p>The pieces were conceived as both design objects and artifacts of temporal process. Instead of treating products as fixed and untouched by time (allowing creators to ignore post-life responsibilities), the project considered how they might weather, erode, and transform. Texture and silhouette were shaped by material behavior, fabrication logic, and an intentional quietness, and some supporters even bought pieces specifically to let them age in soil or water into patina and surface change.</p>
                 </div>
             </div>
-            <figure class="case-study-placeholder case-study-placeholder-grid has-media">
-                <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/01.webp" alt="MOSU product system">
-                <div class="case-study-placeholder-label">Product system</div>
-                <div class="case-study-placeholder-caption">Upload product-family imagery here: multiple objects together, detail crops, texture shots, or a sheet showing how the forms relate as a collection.</div>
+            <figure class="case-study-media-frame">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Mosu/mobile-details/Product System.webp">
+                    <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/Product System.webp" alt="MOSU product system">
+                </picture>
             </figure>
             <div class="case-study-slide-nav">
                 <button class="case-study-next-arrow case-study-slide-arrow" type="button" data-case-study-next aria-label="Next section">➔</button>
@@ -165,10 +164,11 @@
                     <p>The storefront was designed as an extension of the project’s research rather than a neutral sales surface. Product framing, renders, and interface structure were used to make the process legible, giving equal weight to the objects, the material logic behind them, and the community forming around their lifecycle. The brand was also used as a platform for design competitions and external presentation, eventually being selected for sale by Buddy at the gift shop of the Chicago Cultural Center.</p>
                 </div>
             </div>
-            <figure class="case-study-placeholder case-study-placeholder-wide has-media">
-                <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/02.webp" alt="MOSU brand and commerce">
-                <div class="case-study-placeholder-label">Brand and commerce</div>
-                <div class="case-study-placeholder-caption">Best fit here: homepage or shop screenshots, PDP layouts, brand assets, packaging comps, or any visual showing how the objects were translated into a sellable online experience.</div>
+            <figure class="case-study-media-frame">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Mosu/mobile-details/Brand and Commerce.webp">
+                    <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/Brand and Commerce.webp" alt="MOSU brand and commerce">
+                </picture>
             </figure>
             <div class="case-study-slide-nav">
                 <button class="case-study-next-arrow case-study-slide-arrow" type="button" data-case-study-next aria-label="Next section">➔</button>
@@ -183,10 +183,11 @@
                     <p>The visual direction needed to communicate not just what the pieces were, but the ethos behind them: temporality, openness, and material inquiry. Renders, studio process, and editorial framing were used to give the project the voice it needed to stay transparent and research-oriented. The brand was also kept alive by encouraging social media supporters to share direction suggestions and running a blog of interviews with artists and scientists exploring unique materials, and using those conversations to publish speculative pieces on the future of material design.</p>
                 </div>
             </div>
-            <figure class="case-study-placeholder case-study-placeholder-tall has-media">
-                <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/01.webp" alt="MOSU storytelling assets">
-                <div class="case-study-placeholder-label">Storytelling</div>
-                <div class="case-study-placeholder-caption">Use editorial-style supporting assets here: campaign renders, social tiles, launch posters, packaging inserts, close-up product photography, or material narrative graphics.</div>
+            <figure class="case-study-media-frame">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Mosu/mobile-details/Creative Direction.webp">
+                    <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/Creative Direction.webp" alt="MOSU storytelling assets">
+                </picture>
             </figure>
             <div class="case-study-slide-nav">
                 <button class="case-study-next-arrow case-study-slide-arrow" type="button" data-case-study-next aria-label="Next section">➔</button>
@@ -201,10 +202,11 @@
                     <p>MOSU became a way of testing how objects, research, and community could exist as one system rather than as separate layers of product, branding, and sales. The project treated material behavior, temporal change, and public participation as part of the design itself, resulting in a venture that made process visible, invited conversation, and framed commerce as one expression of a broader experimental practice.</p>
                 </div>
             </div>
-            <figure class="case-study-placeholder case-study-placeholder-wide has-media">
-                <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/02.webp" alt="MOSU outcome summary">
-                <div class="case-study-placeholder-label">Outcome</div>
-                <div class="case-study-placeholder-caption">Finish with a strongest summary image: the most resolved product shot, storefront composite, or brand-world collage that makes the venture feel complete and real.</div>
+            <figure class="case-study-media-frame">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Mosu/mobile-details/Outcome.webp">
+                    <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/Outcome.webp" alt="MOSU outcome summary">
+                </picture>
             </figure>
         </section>
     </main>

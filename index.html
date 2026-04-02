@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#efedf0">
     <title>ATAfolio - Studio Practice</title>
     <script>
         (() => {
             const key = 'atafolio-dark-mode-preference';
-            const hour = new Date().getHours();
-            const fallbackDark = hour >= 19 || hour < 6;
             try {
                 const stored = window.localStorage.getItem(key);
-                const shouldUseDark = stored === 'manual-on' ? true : stored === 'manual-off' ? false : fallbackDark;
-                if (shouldUseDark) document.documentElement.classList.add('dark-mode-boot');
-            } catch {
-                if (fallbackDark) document.documentElement.classList.add('dark-mode-boot');
-            }
+                if (stored === 'manual-on') document.documentElement.classList.add('dark-mode-boot');
+            } catch {}
         })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,16 +52,6 @@
 
     <main class="scroll-container">
         <div class="scroll-content" id="index-scroll-content">
-            <div class="project-item" data-project-slug="residee" data-project-url="residee.html" data-slideshow="Images/Projects/Residee/Residee_Thumbnail.webp|Images/Projects/Residee/slideshow/Slide.webp|Images/Projects/Residee/slideshow/Slide1.webp|Images/Projects/Residee/slideshow/Slide2.webp">
-                <div class="project-meta top-meta">
-                    <span class="project-title">Résidée</span>
-                    <span class="project-type">[HARDWARE]</span>
-                </div>
-                <div class="project-image-wrapper">
-                    <img class="project-image" src="Images/Projects/Residee/Residee_Thumbnail.webp" alt="Résidée thumbnail" loading="lazy" decoding="async">
-                </div>
-            </div>
-
             <div class="project-item" data-project-slug="sitch-nyc" data-project-url="sitch-nyc.html" data-slideshow="Images/Projects/Sitch/Sitch_Thumbnail.webp|Images/Projects/Sitch/slideshow/Slide.webp|Images/Projects/Sitch/slideshow/Slide1.webp">
                 <div class="project-meta top-meta">
                     <span class="project-title">Sitch NYC</span>
@@ -86,23 +72,23 @@
                 </div>
             </div>
 
-            <div class="project-item" data-project-slug="mosu" data-project-url="mosu.html" data-slideshow="Images/Projects/Mosu/Mosu_Thumbnail.webp|Images/Projects/Mosu/slideshow/Slide1.webp|Images/Projects/Mosu/slideshow/Slide2.webp">
+            <div class="project-item" data-project-slug="residee" data-project-url="residee.html" data-slideshow="Images/Projects/Residee/Residee_Thumbnail.webp|Images/Projects/Residee/slideshow/Slide.webp|Images/Projects/Residee/slideshow/Slide1.webp|Images/Projects/Residee/slideshow/Slide2.webp">
+                <div class="project-meta top-meta">
+                    <span class="project-title">Résidée</span>
+                    <span class="project-type">[HARDWARE]</span>
+                </div>
+                <div class="project-image-wrapper">
+                    <img class="project-image" src="Images/Projects/Residee/Residee_Thumbnail.webp" alt="Résidée thumbnail" loading="lazy" decoding="async">
+                </div>
+            </div>
+
+            <div class="project-item" data-project-slug="mosu" data-project-url="mosu.html" data-slideshow="Images/Projects/Mosu/slideshow/Slide2.webp|Images/Projects/Mosu/slideshow/Slide1.webp|Images/Projects/Mosu/slideshow/Mosu_Thumbnail.webp">
                 <div class="project-meta top-meta">
                     <span class="project-title">Mosu</span>
                     <span class="project-type">[LIGHTING]</span>
                 </div>
                 <div class="project-image-wrapper">
-                    <img class="project-image" src="Images/Projects/Mosu/Mosu_Thumbnail.webp" alt="Mosu thumbnail" loading="lazy" decoding="async">
-                </div>
-            </div>
-
-            <div class="project-item" data-project-slug="highmark" data-project-url="highmark.html" data-slideshow="Images/Projects/Highmark/Highmark_Thumbnail.png|Images/Projects/Highmark/slideshow/Slide.png|Images/Projects/Highmark/slideshow/Slide1.png|Images/Projects/Highmark/slideshow/Slide2.png">
-                <div class="project-meta top-meta">
-                    <span class="project-title">Highmark</span>
-                    <span class="project-type">[BEAUTY]</span>
-                </div>
-                <div class="project-image-wrapper">
-                    <img class="project-image" src="Images/Projects/Highmark/Highmark_Thumbnail.png" alt="Highmark thumbnail" loading="lazy" decoding="async">
+                    <img class="project-image" src="Images/Projects/Mosu/slideshow/Slide2.webp" alt="Mosu thumbnail" loading="lazy" decoding="async">
                 </div>
             </div>
 

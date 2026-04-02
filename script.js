@@ -30,17 +30,22 @@ const PROJECT_DETAILS = {
         client: "[SITCH NYC]",
         agency: "[ATAFOLIO]",
         media: [
-            "Images/Projects/Sitch/details/Intro.png",
-            "Images/Projects/Sitch/details/Challenge.png",
-            "Images/Projects/Sitch/details/Creative Direction.png",
-            "Images/Projects/Sitch/details/Web Design.png",
-            "Images/Projects/Sitch/details/Style Guide + Social Kit.png",
-            "Images/Projects/Sitch/details/Rollout Across Channels.png",
-            "Images/Projects/Sitch/details/Outro.png"
+            "Images/Projects/Sitch/details/Intro.webp",
+            "Images/Projects/Sitch/details/Challenge.webp",
+            "Images/Projects/Sitch/details/Creative Direction.webp",
+            "Images/Projects/Sitch/details/Web Design.webp",
+            "Images/Projects/Sitch/details/Style Guide + Social Kit.webp",
+            "Images/Projects/Sitch/details/Rollout Across Channels.webp",
+            "Images/Projects/Sitch/details/Outro.webp"
         ],
         mobileMedia: [
-            "Images/Projects/Sitch/mobile-details/01.webp",
-            "Images/Projects/Sitch/mobile-details/02.webp"
+            "Images/Projects/Sitch/mobile-details/Intro.webp",
+            "Images/Projects/Sitch/mobile-details/Challenge.webp",
+            "Images/Projects/Sitch/mobile-details/Creative Direction.webp",
+            "Images/Projects/Sitch/mobile-details/Web Design.webp",
+            "Images/Projects/Sitch/mobile-details/Style Guide + Social Kit.webp",
+            "Images/Projects/Sitch/mobile-details/Rollout Across Channels.webp",
+            "Images/Projects/Sitch/mobile-details/Outro.webp"
         ]
     },
     "curare": {
@@ -77,8 +82,20 @@ const PROJECT_DETAILS = {
         client: "[MOSU]",
         agency: "[ATAFOLIO]",
         media: [
-            "Images/Projects/Mosu/details/01.webp",
-            "Images/Projects/Mosu/details/02.webp"
+            "Images/Projects/Mosu/details/Intro.webp",
+            "Images/Projects/Mosu/details/Challenge.webp",
+            "Images/Projects/Mosu/details/Product System.webp",
+            "Images/Projects/Mosu/details/Brand and Commerce.webp",
+            "Images/Projects/Mosu/details/Creative Direction.webp",
+            "Images/Projects/Mosu/details/Outcome.webp"
+        ],
+        mobileMedia: [
+            "Images/Projects/Mosu/mobile-details/Intro.webp",
+            "Images/Projects/Mosu/mobile-details/Challenge.webp",
+            "Images/Projects/Mosu/mobile-details/Product System.webp",
+            "Images/Projects/Mosu/mobile-details/Brand and Commerce.webp",
+            "Images/Projects/Mosu/mobile-details/Creative Direction.webp",
+            "Images/Projects/Mosu/mobile-details/Outcome.webp"
         ]
     },
     "highmark": {
@@ -111,6 +128,15 @@ const PROJECT_DETAILS = {
             "Images/Projects/Macho-Genie/details/Core components.webp",
             "Images/Projects/Macho-Genie/details/Applying the system.webp",
             "Images/Projects/Macho-Genie/details/Outro.webp"
+        ],
+        mobileMedia: [
+            "Images/Projects/Macho-Genie/mobile-details/Intro.webp",
+            "Images/Projects/Macho-Genie/mobile-details/Challenge.webp",
+            "Images/Projects/Macho-Genie/mobile-details/Foundation.webp",
+            "Images/Projects/Macho-Genie/mobile-details/Tokens.webp",
+            "Images/Projects/Macho-Genie/mobile-details/Core components.webp",
+            "Images/Projects/Macho-Genie/mobile-details/Applying the system.webp",
+            "Images/Projects/Macho-Genie/mobile-details/Outro.webp"
         ]
     },
     "glossier": {
@@ -140,15 +166,15 @@ const PROJECT_DETAILS = {
 };
 
 const PROJECT_SEQUENCE = [
-    { slug: "residee", url: "residee.html" },
     { slug: "sitch-nyc", url: "sitch-nyc.html" },
     { slug: "macho-genie", url: "macho-genie.html" },
+    { slug: "residee", url: "residee.html" },
     { slug: "mosu", url: "mosu.html" },
-    { slug: "highmark", url: "highmark.html" },
     { slug: "curare", url: "curare.html" }
 ];
 
 const PROJECT_HERO_PRELOADS = new Map();
+const CASE_STUDY_SLUGS = new Set(['sitch-nyc', 'macho-genie', 'mosu']);
 
 function isMobileViewportActive() {
     return window.matchMedia('(max-width: 768px)').matches;
@@ -163,6 +189,49 @@ function getProjectMedia(project, { mobile = isMobileViewportActive() } = {}) {
     }
 
     return project.media.map((src) => src.includes('/details/') ? src.replace('/details/', '/mobile-details/') : src);
+}
+
+function markMediaFrameLoaded(frame) {
+    if (!frame) return;
+    frame.classList.remove('is-media-loading');
+    frame.classList.add('is-media-loaded');
+}
+
+function initMediaLoadFrame(frame, image) {
+    if (!frame || !image) return;
+
+    frame.classList.add('media-load-frame');
+    image.classList.add('media-load-target');
+
+    if (!frame.querySelector('.media-load-spinner')) {
+        const spinner = document.createElement('span');
+        spinner.className = 'media-load-spinner';
+        spinner.setAttribute('aria-hidden', 'true');
+        frame.appendChild(spinner);
+    }
+
+    if (image.complete) {
+        markMediaFrameLoaded(frame);
+        return;
+    }
+
+    frame.classList.add('is-media-loading');
+
+    const handleReady = () => {
+        markMediaFrameLoaded(frame);
+    };
+
+    image.addEventListener('load', handleReady, { once: true });
+    image.addEventListener('error', handleReady, { once: true });
+}
+
+function initProjectMediaLoaders(root = document) {
+    const frames = Array.from(root.querySelectorAll('.case-study-placeholder.has-media, .case-study-media-frame, .project-detail-frame, .project-next-image-window'));
+    frames.forEach((frame) => {
+        const image = frame.querySelector('img');
+        if (!image) return;
+        initMediaLoadFrame(frame, image);
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -292,6 +361,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     initProjectDetailPage();
+    initProjectMediaLoaders();
     initIndexIntro();
     initHistoryNavigationRecovery();
 
@@ -338,6 +408,37 @@ document.addEventListener("DOMContentLoaded", () => {
         return hour >= 19 || hour < 6;
     }
 
+    function getStoredDarkModePreference() {
+        try {
+            return window.localStorage.getItem('atafolio-dark-mode-preference');
+        } catch {
+            return null;
+        }
+    }
+
+    function resolvePreferredDarkMode() {
+        if (document.body.classList.contains('play-page')) {
+            return true;
+        }
+
+        const storedPreference = getStoredDarkModePreference();
+        if (storedPreference === 'manual-on') return true;
+        if (storedPreference === 'manual-off') return false;
+
+        return false;
+    }
+
+    function updateThemeColorMeta(shouldUseDarkMode) {
+        const themeColor = shouldUseDarkMode ? '#101212' : '#efedf0';
+        let meta = document.querySelector('meta[name="theme-color"]');
+        if (!meta) {
+            meta = document.createElement('meta');
+            meta.name = 'theme-color';
+            document.head.appendChild(meta);
+        }
+        meta.setAttribute('content', themeColor);
+    }
+
     function setThemeMode(shouldUseDarkMode) {
         if (document.body.classList.contains('play-page')) {
             shouldUseDarkMode = true;
@@ -346,14 +447,18 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.classList.toggle('theme-light', !shouldUseDarkMode);
         document.documentElement.classList.toggle('dark-mode-boot', shouldUseDarkMode);
         document.body.classList.toggle('dark-mode', shouldUseDarkMode);
+        updateThemeColorMeta(shouldUseDarkMode);
     }
 
     function applyScheduledTheme() {
-        setThemeMode(isChicagoNightTime());
+        setThemeMode(resolvePreferredDarkMode());
     }
 
     function toggleDarkMode() {
         const shouldUseDarkMode = !document.body.classList.contains('dark-mode');
+        try {
+            window.localStorage.setItem('atafolio-dark-mode-preference', shouldUseDarkMode ? 'manual-on' : 'manual-off');
+        } catch {}
         setThemeMode(shouldUseDarkMode);
     }
 
@@ -421,10 +526,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.getElementById('footer-controls'),
                     document.querySelector('.branding-intro'),
                     document.querySelector('.mobile-lorem-band'),
-                    document.getElementById('main-footer')
+                    document.getElementById('main-footer'),
+                    ...Array.from(document.querySelectorAll('.project-image-wrapper, .project-image, .project-meta.top-meta'))
                 ].filter(Boolean);
 
-                gsap.set(resetTargets, { clearProps: 'opacity,visibility,pointerEvents,transform' });
+                gsap.set(resetTargets, { clearProps: 'opacity,visibility,pointerEvents,transform,clipPath' });
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        carouselState?.updateCenteredCarouselItem?.();
+                    });
+                });
             }
         });
     }
@@ -515,8 +626,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         initNextProjectSection(slug);
 
-        if ((slug === 'macho-genie' || slug === 'sitch-nyc') && body.classList.contains('case-study-page')) {
+        if (CASE_STUDY_SLUGS.has(slug) && body.classList.contains('case-study-page')) {
             initCaseStudyPageTransition(slug);
+            initProjectMediaLoaders();
             return;
         }
 
@@ -576,6 +688,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             frame.appendChild(image);
             mediaEl.appendChild(frame);
+            initMediaLoadFrame(frame, image);
         });
 
         const titleBlock = document.querySelector('.project-detail-title-block');
@@ -585,10 +698,63 @@ document.addEventListener("DOMContentLoaded", () => {
         const metaBlock = document.querySelector('.project-detail-meta');
         const heroFrame = mediaEl.querySelector('.project-detail-frame-hero');
         const transitionData = readProjectTransition();
+        const cleanupDirectLoad = () => {
+            body.classList.remove('project-detail-load-pending');
+            gsap.set([titleBlock, metaBlock, heroFrame], { clearProps: 'opacity,visibility,transform' });
+            gsap.set(titleChars, { clearProps: 'opacity' });
+            gsap.set([...titleCharInners, yearInner].filter(Boolean), { clearProps: 'transform,willChange' });
+        };
 
-        if (!transitionData || transitionData.slug !== slug || !heroFrame) {
+        if (!heroFrame || typeof gsap === 'undefined') {
             clearProjectTransition();
             document.documentElement.classList.remove('project-transition-pending');
+            body.classList.remove('project-detail-load-pending');
+            return;
+        }
+
+        gsap.set(titleChars, { autoAlpha: 1 });
+        gsap.set(titleCharInners, { yPercent: 110 });
+        if (yearInner) {
+            gsap.set(yearInner, { yPercent: 110 });
+        }
+
+        if (!transitionData || transitionData.slug !== slug) {
+            clearProjectTransition();
+            document.documentElement.classList.remove('project-transition-pending');
+            body.classList.remove('project-detail-load-pending');
+
+            gsap.timeline({
+                defaults: { ease: 'power3.out' },
+                onComplete: cleanupDirectLoad
+            })
+            .to(titleBlock, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.22,
+                ease: 'power2.out'
+            })
+            .to(titleCharInners, {
+                yPercent: 0,
+                duration: 0.58,
+                stagger: 0.06,
+                ease: 'power3.out'
+            }, '-=0.02')
+            .to(yearInner, {
+                yPercent: 0,
+                duration: 0.46,
+                ease: 'power3.out'
+            }, '-=0.18')
+            .to(heroFrame, {
+                autoAlpha: 1,
+                duration: 0.34,
+                ease: 'power2.out'
+            }, '-=0.12')
+            .to(metaBlock, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.52,
+                ease: 'power3.out'
+            }, '-=0.12');
             return;
         }
 
@@ -596,16 +762,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!targetImage) {
             clearProjectTransition();
             document.documentElement.classList.remove('project-transition-pending');
+            body.classList.remove('project-detail-load-pending');
             return;
         }
 
         targetImage.loading = 'eager';
         targetImage.decoding = 'sync';
-
-        gsap.set(titleCharInners, { yPercent: 110 });
-        if (yearInner) {
-            gsap.set(yearInner, { yPercent: 110 });
-        }
 
         const ghost = document.createElement('img');
         ghost.className = 'project-transition-ghost';
@@ -653,7 +815,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 onComplete: () => {
                     clearProjectTransition();
                     document.documentElement.classList.remove('project-transition-pending');
+                    body.classList.remove('project-detail-load-pending');
                     gsap.set([titleBlock, metaBlock], { clearProps: 'opacity,visibility,transform' });
+                    gsap.set(titleChars, { clearProps: 'opacity' });
+                    gsap.set([...titleCharInners, yearInner].filter(Boolean), { clearProps: 'transform,willChange' });
                     if (targetImage.complete && targetImage.naturalWidth > 0) {
                         revealHero();
                     }
@@ -667,7 +832,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 height: targetRect.height,
                 duration: 0.92,
                 ease: 'power4.inOut'
-            })
+            }, 0)
             .to(titleBlock, {
                 autoAlpha: 1,
                 y: 0,
@@ -749,7 +914,47 @@ document.addEventListener("DOMContentLoaded", () => {
         image.decoding = 'async';
 
         imageWindow.appendChild(image);
+        initMediaLoadFrame(imageWindow, image);
         link.append(label, title, year, imageWindow);
+
+        link.addEventListener('click', (event) => {
+            if (
+                event.defaultPrevented ||
+                event.button !== 0 ||
+                event.metaKey ||
+                event.ctrlKey ||
+                event.shiftKey ||
+                event.altKey
+            ) {
+                return;
+            }
+
+            event.preventDefault();
+            if (typeof gsap === 'undefined') {
+                window.location.href = nextProjectRef.url;
+                return;
+            }
+
+            const fadeTargets = [
+                document.querySelector('.site-header'),
+                document.querySelector('.project-detail-hero'),
+                ...Array.from(document.querySelectorAll('.project-detail-frame')),
+                ...Array.from(document.querySelectorAll('.case-study-slide')),
+                document.querySelector('.project-next-section')
+            ].filter(Boolean);
+
+            gsap.timeline({
+                onComplete: () => {
+                    window.location.href = nextProjectRef.url;
+                }
+            }).to(fadeTargets, {
+                opacity: 0,
+                duration: 0.28,
+                ease: 'power2.out',
+                stagger: 0.02
+            });
+        });
+
         section.appendChild(link);
         main.appendChild(section);
     }
@@ -1021,6 +1226,7 @@ function initMobileCarouselTouchState() {
     let startX = 0;
     let startScrollLeft = 0;
     let startIndex = 0;
+    let tappedItem = null;
     let moved = false;
     const dragMultiplier = 1.18;
     const advanceThresholdRatio = 0.12;
@@ -1106,7 +1312,7 @@ function initMobileCarouselTouchState() {
         if (!isDragging || event.pointerId !== activePointerId) return;
 
         const deltaX = (event.clientX - startX) * dragMultiplier;
-        if (Math.abs(deltaX) > 2) {
+        if (Math.abs(deltaX) > 8) {
             moved = true;
             scrollContainer.dataset.justDragged = 'true';
         }
@@ -1121,8 +1327,10 @@ function initMobileCarouselTouchState() {
         if (event && event.pointerId !== activePointerId) return;
         if (!isDragging) return;
 
+        const releasedItem = tappedItem;
         isDragging = false;
         activePointerId = null;
+        tappedItem = null;
         scrollContainer.classList.remove('is-dragging');
         scheduleRelease();
 
@@ -1132,6 +1340,10 @@ function initMobileCarouselTouchState() {
         } else {
             snapToIndex(startIndex);
             clearDragFlag();
+            const projectUrl = releasedItem?.dataset.projectUrl;
+            if (projectUrl) {
+                startProjectCardTransition(releasedItem, projectUrl);
+            }
         }
     };
 
@@ -1152,6 +1364,7 @@ function initMobileCarouselTouchState() {
         startIndex = getClosestItemIndex();
         startX = event.clientX;
         startScrollLeft = scrollContainer.scrollLeft;
+        tappedItem = event.target.closest('.project-item');
         scrollContainer.classList.add('is-dragging');
         scrollContainer.setPointerCapture(event.pointerId);
         setActive();
@@ -1176,9 +1389,6 @@ function initMobileProjectLinks() {
     if (!scrollContainer || !scrollContent) return;
 
     Array.from(scrollContent.querySelectorAll('.project-item')).forEach((item) => {
-        const projectUrl = item.dataset.projectUrl;
-        if (!projectUrl) return;
-
         item.style.cursor = 'pointer';
         item.addEventListener('click', (event) => {
             if (scrollContainer.dataset.justDragged === 'true') {
@@ -1186,8 +1396,6 @@ function initMobileProjectLinks() {
                 event.stopPropagation();
                 return;
             }
-
-            startProjectCardTransition(item, projectUrl);
         });
     });
 }
@@ -1290,6 +1498,22 @@ function initMobileProjectPageScroll() {
     if (isCaseStudy) {
         const slides = Array.from(scrollRoot.querySelectorAll('.case-study-slide'));
         if (!slides.length) return;
+        let tickItems = [];
+        let activeTickPointerId = null;
+
+        const tickBar = document.createElement('div');
+        tickBar.className = 'case-study-mobile-ticks';
+        tickBar.setAttribute('aria-hidden', 'true');
+        slides.forEach((_, index) => {
+            const tick = document.createElement('span');
+            tick.className = 'case-study-mobile-tick';
+            if (index === 0) {
+                tick.classList.add('is-active');
+            }
+            tickBar.appendChild(tick);
+            tickItems.push(tick);
+        });
+        document.body.appendChild(tickBar);
 
         const updateCaseStudySlideStates = () => {
             const currentLeft = scrollRoot.scrollLeft;
@@ -1306,8 +1530,10 @@ function initMobileProjectPageScroll() {
 
             slides.forEach((slide, index) => {
                 slide.classList.toggle('is-active-slide', index === activeIndex);
-                slide.classList.toggle('is-next-slide', index === activeIndex + 1);
-                slide.classList.toggle('is-always-bright-slide', index < 2);
+            });
+
+            tickItems.forEach((tick, index) => {
+                tick.classList.toggle('is-active', index === activeIndex);
             });
         };
 
@@ -1331,6 +1557,44 @@ function initMobileProjectPageScroll() {
                 behavior
             });
         };
+
+        const getTickIndexFromPointer = (clientX) => {
+            const rect = tickBar.getBoundingClientRect();
+            if (!rect.width) return 0;
+            const ratio = Math.min(0.9999, Math.max(0, (clientX - rect.left) / rect.width));
+            return Math.min(slides.length - 1, Math.floor(ratio * slides.length));
+        };
+
+        const setTickPressed = (pressed) => {
+            tickBar.classList.toggle('is-pressed', pressed);
+        };
+
+        const handleTickPointerMove = (event) => {
+            if (event.pointerId !== activeTickPointerId) return;
+            event.preventDefault();
+            const targetSlide = slides[getTickIndexFromPointer(event.clientX)];
+            scrollToSlide(targetSlide, 'auto');
+        };
+
+        const releaseTickPointer = (event) => {
+            if (event && event.pointerId !== activeTickPointerId) return;
+            activeTickPointerId = null;
+            setTickPressed(false);
+        };
+
+        tickBar.addEventListener('pointerdown', (event) => {
+            if (event.pointerType === 'mouse' && event.button !== 0) return;
+            event.preventDefault();
+            activeTickPointerId = event.pointerId;
+            setTickPressed(true);
+            tickBar.setPointerCapture(event.pointerId);
+            const targetSlide = slides[getTickIndexFromPointer(event.clientX)];
+            scrollToSlide(targetSlide, 'auto');
+        });
+
+        tickBar.addEventListener('pointermove', handleTickPointerMove);
+        tickBar.addEventListener('pointerup', releaseTickPointer);
+        tickBar.addEventListener('pointercancel', releaseTickPointer);
 
         Array.from(document.querySelectorAll('.case-study-index a[href^="#"]')).forEach((link) => {
             link.addEventListener('click', (event) => {
@@ -1369,6 +1633,7 @@ function initMobileProjectPageScroll() {
     let lastMoveTime = 0;
     let velocityY = 0;
     let inertiaFrame = null;
+    const interactiveSelector = 'a, button, input, select, textarea, label, summary, [role="button"]';
     const dragMultiplier = 0.9;
     const inertiaMultiplier = 0.42;
     const maxInertiaVelocity = 18;
@@ -1432,6 +1697,7 @@ function initMobileProjectPageScroll() {
 
     scrollRoot.addEventListener('pointerdown', (event) => {
         if (event.pointerType === 'mouse' && event.button !== 0) return;
+        if (event.target.closest(interactiveSelector)) return;
         stopInertia();
         isDragging = true;
         activePointerId = event.pointerId;
@@ -1731,18 +1997,14 @@ function preloadProjectHero(slug) {
 
 function initCaseStudyPageTransition(slug) {
     const body = document.body;
-    if (!body.classList.contains('case-study-page')) {
+    if (!body.classList.contains('case-study-page') || typeof gsap === 'undefined') {
         clearProjectTransition();
         document.documentElement.classList.remove('project-transition-pending');
+        body.classList.remove('case-study-load-pending');
         return;
     }
 
     const transitionData = readProjectTransition();
-    if (!transitionData || transitionData.slug !== slug || typeof gsap === 'undefined') {
-        clearProjectTransition();
-        document.documentElement.classList.remove('project-transition-pending');
-        return;
-    }
 
     const kicker = document.querySelector('.case-study-kicker');
     const title = document.querySelector('.case-study-title');
@@ -1751,15 +2013,21 @@ function initCaseStudyPageTransition(slug) {
     const overviewDesktop = document.querySelector('.case-study-overview-desktop');
     const heroMeta = document.querySelector('.case-study-hero > .case-study-meta');
     const slideTargets = Array.from(document.querySelectorAll('.case-study-slide:not(.case-study-slide-intro)'));
-    const revealTargets = [indexBlock, overviewDesktop, heroMeta, ...slideTargets].filter((element) => {
+    const introRevealTargets = [indexBlock, overviewDesktop].filter((element) => {
         if (!element) return false;
         return window.getComputedStyle(element).display !== 'none';
     });
+    const revealTargets = [heroMeta, ...slideTargets].filter((element) => {
+        if (!element) return false;
+        return window.getComputedStyle(element).display !== 'none';
+    });
+    const hasMatchingTransition = Boolean(transitionData && transitionData.slug === slug);
 
     const cleanup = () => {
         clearProjectTransition();
         document.documentElement.classList.remove('project-transition-pending');
-        gsap.set([kicker, title, year, ...revealTargets], { clearProps: 'opacity,visibility,transform' });
+        body.classList.remove('case-study-load-pending');
+        gsap.set([kicker, title, year, ...introRevealTargets, ...revealTargets], { clearProps: 'opacity,visibility,transform' });
     };
 
     if (!title || !year) {
@@ -1768,43 +2036,90 @@ function initCaseStudyPageTransition(slug) {
     }
 
     gsap.set(kicker, { autoAlpha: 0, y: 12 });
+    gsap.set(introRevealTargets, { autoAlpha: 0, y: 24 });
     gsap.set(revealTargets, { autoAlpha: 0, y: 24 });
-    gsap.set(title, { yPercent: 110 });
-    gsap.set(year, { yPercent: 110 });
+    gsap.set([title, year], { autoAlpha: 0 });
 
-    gsap.timeline({
-        defaults: { ease: 'power3.out' },
-        onComplete: cleanup
-    })
-    .to(kicker, {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.34
-    })
-    .to(title, {
-        yPercent: 0,
-        duration: 0.78,
-        ease: 'power4.out'
-    }, '-=0.04')
-    .to(year, {
-        yPercent: 0,
-        duration: 0.72,
-        ease: 'power4.out'
-    }, '-=0.52')
-    .to(revealTargets, {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.42,
-        stagger: 0.11,
-        ease: 'power2.out'
-    }, '-=0.08');
+    if (!hasMatchingTransition) {
+        clearProjectTransition();
+        document.documentElement.classList.remove('project-transition-pending');
+
+        gsap.timeline({
+            defaults: { ease: 'power3.out' },
+            onComplete: cleanup
+        })
+        .to(title, {
+            autoAlpha: 1,
+            duration: 0.42,
+            ease: 'power2.out'
+        })
+        .to(year, {
+            autoAlpha: 1,
+            duration: 0.38,
+            ease: 'power2.out'
+        }, '+=0.14')
+        .to(introRevealTargets, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.46,
+            ease: 'power2.out'
+        }, '+=0.16')
+        .to(revealTargets, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.42,
+            stagger: 0.11,
+            ease: 'power2.out'
+        }, '+=0.18')
+        .to(kicker, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.32
+        }, '>-0.04');
+        return;
+    }
+
+    if (document.documentElement.classList.contains('project-transition-pending')) {
+        gsap.timeline({
+            defaults: { ease: 'power3.out' },
+            onComplete: cleanup
+        })
+        .to(title, {
+            autoAlpha: 1,
+            duration: 0.42,
+            ease: 'power2.out'
+        })
+        .to(year, {
+            autoAlpha: 1,
+            duration: 0.38,
+            ease: 'power2.out'
+        }, '+=0.14')
+        .to(introRevealTargets, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.46,
+            ease: 'power2.out'
+        }, '+=0.16')
+        .to(revealTargets, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.42,
+            stagger: 0.11,
+            ease: 'power2.out'
+        }, '+=0.18')
+        .to(kicker, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.32
+        }, '>-0.04');
+    }
 }
 
 function startProjectCardTransition(item, projectUrl) {
     const image = item.querySelector('.project-image');
     const wrapper = item.querySelector('.project-image-wrapper');
     const projectSlug = item.dataset.projectSlug || '';
-    const isCaseStudyTarget = projectSlug === 'macho-genie' || projectSlug === 'sitch-nyc';
+    const isCaseStudyTarget = CASE_STUDY_SLUGS.has(projectSlug);
 
     if (!image || !wrapper || typeof gsap === 'undefined') {
         window.location.href = projectUrl;
@@ -2276,7 +2591,9 @@ function initListView(carouselState) {
     // Extract project data
     const projects = Array.from(scrollContent.querySelectorAll('.project-item:not(.loop-clone)')).map(item => ({
         title: item.querySelector('.project-title').textContent,
-        img: item.querySelector('.project-image').src
+        img: item.querySelector('.project-image').src,
+        url: item.dataset.projectUrl,
+        sourceItem: item
     }));
 
     const projectImages = [];
@@ -2286,6 +2603,9 @@ function initListView(carouselState) {
         const span = document.createElement('span');
         span.className = 'list-item';
         span.textContent = project.title + (index < projects.length - 1 ? ',' : '');
+        if (project.url) {
+            span.style.cursor = 'pointer';
+        }
 
         const img = document.createElement('img');
         img.className = 'preview-image';
@@ -2312,6 +2632,12 @@ function initListView(carouselState) {
 
             textCloud.querySelectorAll('.list-item').forEach((item) => item.classList.remove('selected'));
             span.classList.add('selected');
+        });
+
+        span.addEventListener('click', (event) => {
+            if (!project.url || !project.sourceItem || !isListInteractive || isViewTransitioning) return;
+            event.preventDefault();
+            startProjectCardTransition(project.sourceItem, project.url);
         });
 
         textCloud.appendChild(span);

@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#efedf0">
     <title>ATAfolio - Sitch NYC</title>
     <script>
         (() => {
             const key = 'atafolio-dark-mode-preference';
-            const hour = new Date().getHours();
-            const fallbackDark = hour >= 19 || hour < 6;
             try {
                 const stored = window.localStorage.getItem(key);
-                const shouldUseDark = stored === 'manual-on' ? true : stored === 'manual-off' ? false : fallbackDark;
-                if (shouldUseDark) document.documentElement.classList.add('dark-mode-boot');
-            } catch {
-                if (fallbackDark) document.documentElement.classList.add('dark-mode-boot');
-            }
+                if (stored === 'manual-on') document.documentElement.classList.add('dark-mode-boot');
+            } catch {}
         })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +23,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
     <script>if (sessionStorage.getItem('project-transition')) document.documentElement.classList.add('project-transition-pending');</script>
 </head>
-<body class="theme-light project-page case-study-page" data-project-slug="sitch-nyc">
+<body class="theme-light project-page case-study-page case-study-load-pending" data-project-slug="sitch-nyc">
     <div class="page-transition-overlay" id="play-page-transition-overlay"></div>
     <header class="site-header">
         <a href="index.html" class="logo"><span class="logo-wordmark"><span class="ata-text">ATA</span><span class="berkol-text">Be<span class="berkol-tail">rkol</span></span></span></a>
@@ -114,8 +110,8 @@
             </div>
             <figure class="case-study-media-frame">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="Images/Projects/Sitch/mobile-details/01.webp">
-                    <img class="case-study-placeholder-image" src="Images/Projects/Sitch/details/Intro.png" alt="Sitch NYC project overview hero image">
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Sitch/mobile-details/Intro.webp">
+                    <img class="case-study-placeholder-image" src="Images/Projects/Sitch/details/Intro.webp" alt="Sitch NYC project overview hero image">
                 </picture>
             </figure>
             <div class="case-study-slide-nav">
@@ -133,8 +129,8 @@
             </div>
             <figure class="case-study-media-frame">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="Images/Projects/Sitch/mobile-details/01.webp">
-                    <img class="case-study-placeholder-image" src="Images/Projects/Sitch/details/Challenge.png" alt="Sitch NYC challenge reference board">
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Sitch/mobile-details/Challenge.webp">
+                    <img class="case-study-placeholder-image" src="Images/Projects/Sitch/details/Challenge.webp" alt="Sitch NYC challenge reference board">
                 </picture>
             </figure>
             <div class="case-study-slide-nav">
@@ -152,8 +148,8 @@
             </div>
             <figure class="case-study-media-frame">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="Images/Projects/Sitch/mobile-details/01.webp">
-                    <img class="case-study-placeholder-image" src="Images/Projects/Sitch/details/Creative Direction.png" alt="Sitch NYC creative direction board">
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Sitch/mobile-details/Creative Direction.webp">
+                    <img class="case-study-placeholder-image" src="Images/Projects/Sitch/details/Creative Direction.webp" alt="Sitch NYC creative direction board">
                 </picture>
             </figure>
             <div class="case-study-slide-nav">
@@ -171,8 +167,8 @@
             </div>
             <figure class="case-study-media-frame">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="Images/Projects/Sitch/mobile-details/02.webp">
-                    <img class="case-study-placeholder-image" src="Images/Projects/Sitch/details/Web Design.png" alt="Sitch NYC web design layouts">
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Sitch/mobile-details/Web Design.webp">
+                    <img class="case-study-placeholder-image" src="Images/Projects/Sitch/details/Web Design.webp" alt="Sitch NYC web design layouts">
                 </picture>
             </figure>
             <div class="case-study-slide-nav">
@@ -190,8 +186,8 @@
             </div>
             <figure class="case-study-media-frame">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="Images/Projects/Sitch/mobile-details/02.webp">
-                    <img class="case-study-placeholder-image" src="Images/Projects/Sitch/details/Style Guide + Social Kit.png" alt="Sitch NYC style guide and social kit">
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Sitch/mobile-details/Style Guide + Social Kit.webp">
+                    <img class="case-study-placeholder-image" src="Images/Projects/Sitch/details/Style Guide + Social Kit.webp" alt="Sitch NYC style guide and social kit">
                 </picture>
             </figure>
             <div class="case-study-slide-nav">
@@ -209,8 +205,8 @@
             </div>
             <figure class="case-study-media-frame">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="Images/Projects/Sitch/mobile-details/02.webp">
-                    <img class="case-study-placeholder-image" src="Images/Projects/Sitch/details/Rollout Across Channels.png" alt="Sitch NYC rollout across channels mockups">
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Sitch/mobile-details/Rollout Across Channels.webp">
+                    <img class="case-study-placeholder-image" src="Images/Projects/Sitch/details/Rollout Across Channels.webp" alt="Sitch NYC rollout across channels mockups">
                 </picture>
             </figure>
             <div class="case-study-slide-nav">
@@ -228,8 +224,8 @@
             </div>
             <figure class="case-study-media-frame">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="Images/Projects/Sitch/mobile-details/02.webp">
-                    <img class="case-study-placeholder-image" src="Images/Projects/Sitch/details/Outro.png" alt="Sitch NYC final outcome composition">
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Sitch/mobile-details/Outro.webp">
+                    <img class="case-study-placeholder-image" src="Images/Projects/Sitch/details/Outro.webp" alt="Sitch NYC final outcome composition">
                 </picture>
             </figure>
         </section>

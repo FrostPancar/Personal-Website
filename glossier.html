@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#efedf0">
     <title>ATAfolio - Glossier</title>
     <script>
         (() => {
             const key = 'atafolio-dark-mode-preference';
-            const hour = new Date().getHours();
-            const fallbackDark = hour >= 19 || hour < 6;
             try {
                 const stored = window.localStorage.getItem(key);
-                const shouldUseDark = stored === 'manual-on' ? true : stored === 'manual-off' ? false : fallbackDark;
-                if (shouldUseDark) document.documentElement.classList.add('dark-mode-boot');
-            } catch {
-                if (fallbackDark) document.documentElement.classList.add('dark-mode-boot');
-            }
+                if (stored === 'manual-on') document.documentElement.classList.add('dark-mode-boot');
+            } catch {}
         })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +23,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
     <script>if (sessionStorage.getItem('project-transition')) document.documentElement.classList.add('project-transition-pending');</script>
 </head>
-<body class="theme-light project-page" data-project-slug="glossier">
+<body class="theme-light project-page project-detail-load-pending" data-project-slug="glossier">
     <div class="page-transition-overlay" id="play-page-transition-overlay"></div>
     <header class="site-header">
         <a href="index.html" class="logo"><span class="logo-wordmark"><span class="ata-text">ATA</span><span class="berkol-text">Be<span class="berkol-tail">rkol</span></span></span></a>

@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#efedf0">
     <title>ATAfolio - Macho Genie</title>
     <script>
         (() => {
             const key = 'atafolio-dark-mode-preference';
-            const hour = new Date().getHours();
-            const fallbackDark = hour >= 19 || hour < 6;
             try {
                 const stored = window.localStorage.getItem(key);
-                const shouldUseDark = stored === 'manual-on' ? true : stored === 'manual-off' ? false : fallbackDark;
-                if (shouldUseDark) document.documentElement.classList.add('dark-mode-boot');
-            } catch {
-                if (fallbackDark) document.documentElement.classList.add('dark-mode-boot');
-            }
+                if (stored === 'manual-on') document.documentElement.classList.add('dark-mode-boot');
+            } catch {}
         })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +23,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
     <script>if (sessionStorage.getItem('project-transition')) document.documentElement.classList.add('project-transition-pending');</script>
 </head>
-<body class="theme-light project-page case-study-page" data-project-slug="macho-genie">
+<body class="theme-light project-page case-study-page case-study-load-pending" data-project-slug="macho-genie">
     <div class="page-transition-overlay" id="play-page-transition-overlay"></div>
     <header class="site-header">
         <a href="index.html" class="logo"><span class="logo-wordmark"><span class="ata-text">ATA</span><span class="berkol-text">Be<span class="berkol-tail">rkol</span></span></span></a>
@@ -114,7 +110,7 @@
             </div>
             <figure class="case-study-media-frame">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="Images/Projects/Macho-Genie/mobile-details/00.png">
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Macho-Genie/mobile-details/Intro.webp">
                     <img class="case-study-placeholder-image" src="Images/Projects/Macho-Genie/details/Intro.webp" alt="Macho Genie overview screen">
                 </picture>
             </figure>
@@ -133,7 +129,7 @@
             </div>
             <figure class="case-study-media-frame">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="Images/Projects/Macho-Genie/mobile-details/01.webp">
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Macho-Genie/mobile-details/Challenge.webp">
                     <img class="case-study-placeholder-image" src="Images/Projects/Macho-Genie/details/Challenge.webp" alt="Macho Genie challenge boards">
                 </picture>
             </figure>
@@ -152,7 +148,7 @@
             </div>
             <figure class="case-study-media-frame">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="Images/Projects/Macho-Genie/mobile-details/01.webp">
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Macho-Genie/mobile-details/Foundation.webp">
                     <img class="case-study-placeholder-image" src="Images/Projects/Macho-Genie/details/Foundation.webp" alt="Macho Genie foundation system">
                 </picture>
             </figure>
@@ -171,7 +167,7 @@
             </div>
             <figure class="case-study-media-frame">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="Images/Projects/Macho-Genie/mobile-details/02.webp">
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Macho-Genie/mobile-details/Tokens.webp">
                     <img class="case-study-placeholder-image" src="Images/Projects/Macho-Genie/details/Tokens.webp" alt="Macho Genie tokens and visual rules">
                 </picture>
             </figure>
@@ -190,7 +186,7 @@
             </div>
             <figure class="case-study-media-frame">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="Images/Projects/Macho-Genie/mobile-details/02.webp">
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Macho-Genie/mobile-details/Core components.webp">
                     <img class="case-study-placeholder-image" src="Images/Projects/Macho-Genie/details/Core components.webp" alt="Macho Genie core components">
                 </picture>
             </figure>
@@ -209,7 +205,7 @@
             </div>
             <figure class="case-study-media-frame">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="Images/Projects/Macho-Genie/mobile-details/03.webp">
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Macho-Genie/mobile-details/Applying the system.webp">
                     <img class="case-study-placeholder-image" src="Images/Projects/Macho-Genie/details/Applying the system.webp" alt="Macho Genie applied system screens">
                 </picture>
             </figure>
@@ -228,7 +224,7 @@
             </div>
             <figure class="case-study-media-frame">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="Images/Projects/Macho-Genie/mobile-details/03.webp">
+                    <source media="(max-width: 768px)" srcset="Images/Projects/Macho-Genie/mobile-details/Outro.webp">
                     <img class="case-study-placeholder-image" src="Images/Projects/Macho-Genie/details/Outro.webp" alt="Macho Genie final outcome">
                 </picture>
             </figure>
