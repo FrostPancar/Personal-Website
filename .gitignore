@@ -9,4 +9,15 @@ Images/*
 Images/Projects/**/.DS_Store
 Images/Projects/.DS_Store
 Inspo/
-fonts/
+fonts/*/**
+!fonts/*/
+!fonts/*/OFL.txt
+!fonts/Astloch/Astloch-Regular.ttf
+!fonts/Astloch/Astloch-Bold.ttf
+!fonts/Ballet/static/
+!fonts/Ballet/static/Ballet_48pt-Regular.ttf
+!fonts/Bitcount_Prop_Single/BitcountPropSingle-VariableFont_CRSV,ELSH,ELXP,slnt,wght.ttf
+!fonts/UnifrakturCook/UnifrakturCook-Bold.ttf
+!fonts/UnifrakturMaguntia/UnifrakturMaguntia-Regular.ttf
+!fonts/Yomogi/Yomogi-Regular.ttf
+fonts/.DS_Store
