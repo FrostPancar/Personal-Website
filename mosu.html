@@ -10,7 +10,13 @@
             const key = 'atafolio-dark-mode-preference';
             try {
                 const stored = window.localStorage.getItem(key);
-                if (stored === 'manual-on') document.documentElement.classList.add('dark-mode-boot');
+                const hour = Number(new Intl.DateTimeFormat('en-US', {
+                    timeZone: 'America/Chicago',
+                    hour: 'numeric',
+                    hour12: false
+                }).format(new Date()));
+                const shouldUseDark = stored === 'manual-on' || (stored !== 'manual-off' && (hour >= 19 || hour < 6));
+                if (shouldUseDark) document.documentElement.classList.add('dark-mode-boot');
             } catch {}
         })();
     </script>
@@ -33,8 +39,8 @@
         </div>
         <div class="contact-link">
             <div class="nav-link-wrapper">
-                <a href="mailto:hello@example.com" class="underline-link">Send me a message</a>
-                <a href="mailto:hello@example.com" class="underline-link" aria-hidden="true">Send me a message</a>
+                <a href="mailto:ataberkol@outlook.com" class="underline-link">Send me a message</a>
+                <a href="mailto:ataberkol@outlook.com" class="underline-link" aria-hidden="true">Send me a message</a>
             </div>
         </div>
     </header>
@@ -83,6 +89,12 @@
                         </div>
                     </div>
                 </div>
+                <figure class="case-study-media-frame case-study-intro-overview-media">
+                    <picture>
+                        <source media="(max-width: 768px)" srcset="Images/Projects/Mosu/mobile-details/Intro.webp">
+                        <img class="case-study-placeholder-image" src="Images/Projects/Mosu/details/Intro.webp" alt="MOSU overview hero">
+                    </picture>
+                </figure>
             </div>
             <div class="case-study-slide-nav">
                 <button class="case-study-next-arrow case-study-slide-arrow" type="button" data-case-study-next aria-label="Next section">➔</button>

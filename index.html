@@ -10,17 +10,27 @@
             const key = 'atafolio-dark-mode-preference';
             try {
                 const stored = window.localStorage.getItem(key);
-                if (stored === 'manual-on') document.documentElement.classList.add('dark-mode-boot');
+                const hour = Number(new Intl.DateTimeFormat('en-US', {
+                    timeZone: 'America/Chicago',
+                    hour: 'numeric',
+                    hour12: false
+                }).format(new Date()));
+                const shouldUseDark = stored === 'manual-on' || (stored !== 'manual-off' && (hour >= 19 || hour < 6));
+                if (shouldUseDark) document.documentElement.classList.add('dark-mode-boot');
             } catch {}
         })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caesar+Dressing&family=Inter:wght@400;500;600&family=Jacquard+12&family=Jacquard+12+Charted&family=Mr+Bedfort&family=Playfair+Display:ital,wght@1,400&family=Sixtyfour&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="Images/Projects/Sitch/slideshow/Slide-desktop.webp" media="(min-width: 769px)">
+    <link rel="preload" as="image" href="Images/Projects/Sitch/slideshow/Slide1-desktop.webp" media="(min-width: 769px)">
+    <link rel="preload" as="image" href="Images/Projects/Sitch/slideshow/Slide-mobile.webp" media="(max-width: 768px)">
+    <link rel="preload" as="image" href="Images/Projects/Sitch/slideshow/Slide1-mobile.webp" media="(max-width: 768px)">
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
 </head>
 <body class="theme-light index-page index-intro-pending">
     <div class="page-transition-overlay" id="play-page-transition-overlay"></div>
@@ -39,8 +49,8 @@
         </div>
         <div class="contact-link">
             <div class="nav-link-wrapper">
-                <a href="mailto:hello@example.com" class="underline-link">Send me a message</a>
-                <a href="mailto:hello@example.com" class="underline-link" aria-hidden="true">Send me a message</a>
+                <a href="mailto:ataberkol@outlook.com" class="underline-link">Send me a message</a>
+                <a href="mailto:ataberkol@outlook.com" class="underline-link" aria-hidden="true">Send me a message</a>
             </div>
         </div>
     </header>
@@ -52,53 +62,53 @@
 
     <main class="scroll-container">
         <div class="scroll-content" id="index-scroll-content">
-            <div class="project-item" data-project-slug="sitch-nyc" data-project-url="sitch-nyc.html" data-slideshow="Images/Projects/Sitch/Sitch_Thumbnail.webp|Images/Projects/Sitch/slideshow/Slide.webp|Images/Projects/Sitch/slideshow/Slide1.webp">
+            <div class="project-item" data-project-slug="sitch-nyc" data-project-url="sitch-nyc.html" data-slideshow="Images/Projects/Sitch/Sitch_Thumbnail-desktop.webp|Images/Projects/Sitch/slideshow/Slide-desktop.webp|Images/Projects/Sitch/slideshow/Slide1-desktop.webp" data-mobile-slideshow="Images/Projects/Sitch/Sitch_Thumbnail-mobile.webp|Images/Projects/Sitch/slideshow/Slide-mobile.webp|Images/Projects/Sitch/slideshow/Slide1-mobile.webp">
                 <div class="project-meta top-meta">
                     <span class="project-title">Sitch NYC</span>
                     <span class="project-type">[LIQUID]</span>
                 </div>
                 <div class="project-image-wrapper">
-                    <img class="project-image" src="Images/Projects/Sitch/Sitch_Thumbnail.webp" alt="Sitch NYC thumbnail" loading="lazy" decoding="async">
+                    <img class="project-image" src="Images/Projects/Sitch/Sitch_Thumbnail-desktop.webp" srcset="Images/Projects/Sitch/Sitch_Thumbnail-mobile.webp 960w, Images/Projects/Sitch/Sitch_Thumbnail-desktop.webp 900w" sizes="(max-width: 768px) 82vw, 28.08vw" alt="Sitch NYC thumbnail" loading="eager" fetchpriority="high" decoding="async">
                 </div>
             </div>
 
-            <div class="project-item" data-project-slug="macho-genie" data-project-url="macho-genie.html" data-slideshow="Images/Projects/Macho-Genie/Thumbnail.webp|Images/Projects/Macho-Genie/slideshow/Slide.webp|Images/Projects/Macho-Genie/slideshow/Slide1.webp|Images/Projects/Macho-Genie/slideshow/Slide2.webp">
+            <div class="project-item" data-project-slug="macho-genie" data-project-url="macho-genie.html" data-slideshow="Images/Projects/Macho-Genie/Thumbnail-desktop.webp|Images/Projects/Macho-Genie/slideshow/Slide-desktop.webp|Images/Projects/Macho-Genie/slideshow/Slide1-desktop.webp|Images/Projects/Macho-Genie/slideshow/Slide2-desktop.webp" data-mobile-slideshow="Images/Projects/Macho-Genie/Thumbnail-mobile.webp|Images/Projects/Macho-Genie/slideshow/Slide-mobile.webp|Images/Projects/Macho-Genie/slideshow/Slide1-mobile.webp|Images/Projects/Macho-Genie/slideshow/Slide2-mobile.webp">
                 <div class="project-meta top-meta">
                     <span class="project-title">Macho Genie</span>
                     <span class="project-type">[WELLNESS]</span>
                 </div>
                 <div class="project-image-wrapper">
-                    <img class="project-image" src="Images/Projects/Macho-Genie/Thumbnail.webp" alt="Macho Genie thumbnail" loading="lazy" decoding="async">
+                    <img class="project-image" src="Images/Projects/Macho-Genie/Thumbnail-desktop.webp" srcset="Images/Projects/Macho-Genie/Thumbnail-mobile.webp 960w, Images/Projects/Macho-Genie/Thumbnail-desktop.webp 900w" sizes="(max-width: 768px) 82vw, 28.08vw" alt="Macho Genie thumbnail" loading="lazy" decoding="async">
                 </div>
             </div>
 
-            <div class="project-item" data-project-slug="residee" data-project-url="residee.html" data-slideshow="Images/Projects/Residee/Residee_Thumbnail.webp|Images/Projects/Residee/slideshow/Slide.webp|Images/Projects/Residee/slideshow/Slide1.webp|Images/Projects/Residee/slideshow/Slide2.webp">
+            <div class="project-item" data-project-slug="residee" data-project-url="residee.html" data-slideshow="Images/Projects/Residee/Residee_Thumbnail-desktop.webp|Images/Projects/Residee/slideshow/Slide-desktop.webp|Images/Projects/Residee/slideshow/Slide1-desktop.webp|Images/Projects/Residee/slideshow/Slide2-desktop.webp" data-mobile-slideshow="Images/Projects/Residee/Residee_Thumbnail-mobile.webp|Images/Projects/Residee/slideshow/Slide-mobile.webp|Images/Projects/Residee/slideshow/Slide1-mobile.webp|Images/Projects/Residee/slideshow/Slide2-mobile.webp">
                 <div class="project-meta top-meta">
                     <span class="project-title">Résidée</span>
                     <span class="project-type">[HARDWARE]</span>
                 </div>
                 <div class="project-image-wrapper">
-                    <img class="project-image" src="Images/Projects/Residee/Residee_Thumbnail.webp" alt="Résidée thumbnail" loading="lazy" decoding="async">
+                    <img class="project-image" src="Images/Projects/Residee/Residee_Thumbnail-desktop.webp" srcset="Images/Projects/Residee/Residee_Thumbnail-mobile.webp 960w, Images/Projects/Residee/Residee_Thumbnail-desktop.webp 900w" sizes="(max-width: 768px) 82vw, 28.08vw" alt="Résidée thumbnail" loading="lazy" decoding="async">
                 </div>
             </div>
 
-            <div class="project-item" data-project-slug="mosu" data-project-url="mosu.html" data-slideshow="Images/Projects/Mosu/slideshow/Slide2.webp|Images/Projects/Mosu/slideshow/Slide1.webp|Images/Projects/Mosu/slideshow/Mosu_Thumbnail.webp">
+            <div class="project-item" data-project-slug="mosu" data-project-url="mosu.html" data-slideshow="Images/Projects/Mosu/slideshow/Slide2-desktop.webp|Images/Projects/Mosu/slideshow/Slide1-desktop.webp|Images/Projects/Mosu/slideshow/Mosu_Thumbnail-desktop.webp" data-mobile-slideshow="Images/Projects/Mosu/slideshow/Slide2-mobile.webp|Images/Projects/Mosu/slideshow/Slide1-mobile.webp|Images/Projects/Mosu/slideshow/Mosu_Thumbnail-mobile.webp">
                 <div class="project-meta top-meta">
                     <span class="project-title">Mosu</span>
                     <span class="project-type">[LIGHTING]</span>
                 </div>
                 <div class="project-image-wrapper">
-                    <img class="project-image" src="Images/Projects/Mosu/slideshow/Slide2.webp" alt="Mosu thumbnail" loading="lazy" decoding="async">
+                    <img class="project-image" src="Images/Projects/Mosu/slideshow/Slide2-desktop.webp" srcset="Images/Projects/Mosu/slideshow/Slide2-mobile.webp 960w, Images/Projects/Mosu/slideshow/Slide2-desktop.webp 900w" sizes="(max-width: 768px) 82vw, 28.08vw" alt="Mosu thumbnail" loading="lazy" decoding="async">
                 </div>
             </div>
 
-            <div class="project-item" data-project-slug="curare" data-project-url="curare.html" data-slideshow="Images/Projects/Curare/Curare_Thumbnail.webp|Images/Projects/Curare/slideshow/Slide.webp|Images/Projects/Curare/slideshow/Slide2.webp">
+            <div class="project-item" data-project-slug="curare" data-project-url="curare.html" data-slideshow="Images/Projects/Curare/Curare_Thumbnail-desktop.webp|Images/Projects/Curare/slideshow/Slide-desktop.webp|Images/Projects/Curare/slideshow/Slide2-desktop.webp" data-mobile-slideshow="Images/Projects/Curare/Curare_Thumbnail-mobile.webp|Images/Projects/Curare/slideshow/Slide-mobile.webp|Images/Projects/Curare/slideshow/Slide2-mobile.webp">
                 <div class="project-meta top-meta">
                     <span class="project-title">Curare</span>
                     <span class="project-type">[GAMING]</span>
                 </div>
                 <div class="project-image-wrapper">
-                    <img class="project-image" src="Images/Projects/Curare/Curare_Thumbnail.webp" alt="Curare thumbnail" loading="lazy" decoding="async">
+                    <img class="project-image" src="Images/Projects/Curare/Curare_Thumbnail-desktop.webp" srcset="Images/Projects/Curare/Curare_Thumbnail-mobile.webp 960w, Images/Projects/Curare/Curare_Thumbnail-desktop.webp 900w" sizes="(max-width: 768px) 82vw, 28.08vw" alt="Curare thumbnail" loading="lazy" decoding="async">
                 </div>
             </div>
         </div>
@@ -123,7 +133,7 @@
                         <h1 class="watermark-text-large" id="watermark-text-large">
                             <span class="watermark-motion-shell" id="watermark-motion-shell">
                                 <span class="watermark-word-mask watermark-word-mask-ata"><span class="ata-text" id="ata-text">ATA</span></span>
-                                <span class="watermark-word-mask watermark-word-mask-berkol"><span class="berkol-text">Be<span class="berkol-tail">rkol</span></span></span>
+                                <span class="watermark-word-mask watermark-word-mask-berkol"><span class="berkol-text"><span class="berkol-mobile-short">B</span><span class="berkol-full">Be<span class="berkol-tail">rkol</span></span></span></span>
                             </span>
                             <span class="mobile-wordmark-copy">is an Independent Designer and Creative Technologist based in Chicago. His current carry-on books are Wuthering Heights by Emily Bronte and How to Write About Contemporary Art by Gilda Williams. He's currently obsessed with the design philosophy of Super Normal by Naoto Fukasawa and Jasper Morrison. He's originally from Istanbul.</span>
                         </h1>
@@ -153,6 +163,6 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script defer src="script.js"></script>
 </body>
 </html>

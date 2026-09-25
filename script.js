@@ -56,23 +56,53 @@ const PROJECT_DETAILS = {
         agency: "[ATAFOLIO]",
         media: [
             "Images/Projects/Curare/details/01.webp",
-            "Images/Projects/Curare/details/02.gif",
+            {
+                type: "video",
+                mp4: "Images/Projects/Curare/details/02.mp4",
+                webm: "Images/Projects/Curare/details/02.webm",
+                mobileMp4: "Images/Projects/Curare/mobile-details/02.mp4",
+                mobileWebm: "Images/Projects/Curare/mobile-details/02.webm"
+            },
             "Images/Projects/Curare/details/03.webp",
-            "Images/Projects/Curare/details/04.gif",
+            {
+                type: "video",
+                mp4: "Images/Projects/Curare/details/04.mp4",
+                webm: "Images/Projects/Curare/details/04.webm",
+                mobileMp4: "Images/Projects/Curare/mobile-details/04.mp4",
+                mobileWebm: "Images/Projects/Curare/mobile-details/04.webm"
+            },
             "Images/Projects/Curare/details/05.webp",
-            "Images/Projects/Curare/details/06.gif",
+            {
+                type: "video",
+                mp4: "Images/Projects/Curare/details/06.mp4",
+                webm: "Images/Projects/Curare/details/06.webm",
+                mobileMp4: "Images/Projects/Curare/mobile-details/06.mp4",
+                mobileWebm: "Images/Projects/Curare/mobile-details/06.webm"
+            },
             "Images/Projects/Curare/details/07.webp",
             "Images/Projects/Curare/details/09.webp"
         ],
         mobileMedia: [
-            "Images/Projects/Curare/mobile-details/01.jpg",
-            "Images/Projects/Curare/mobile-details/02.gif",
-            "Images/Projects/Curare/mobile-details/03.jpg",
-            "Images/Projects/Curare/mobile-details/04.gif",
-            "Images/Projects/Curare/mobile-details/05.jpg",
-            "Images/Projects/Curare/mobile-details/06.gif",
-            "Images/Projects/Curare/mobile-details/07.jpg",
-            "Images/Projects/Curare/mobile-details/09.jpg"
+            "Images/Projects/Curare/mobile-details/01.webp",
+            {
+                type: "video",
+                mp4: "Images/Projects/Curare/mobile-details/02.mp4",
+                webm: "Images/Projects/Curare/mobile-details/02.webm"
+            },
+            "Images/Projects/Curare/mobile-details/03.webp",
+            {
+                type: "video",
+                mp4: "Images/Projects/Curare/mobile-details/04.mp4",
+                webm: "Images/Projects/Curare/mobile-details/04.webm"
+            },
+            "Images/Projects/Curare/mobile-details/05.webp",
+            {
+                type: "video",
+                mp4: "Images/Projects/Curare/mobile-details/06.mp4",
+                webm: "Images/Projects/Curare/mobile-details/06.webm"
+            },
+            "Images/Projects/Curare/mobile-details/07.webp",
+            "Images/Projects/Curare/mobile-details/09.webp"
         ]
     },
     "mosu": {
@@ -105,13 +135,22 @@ const PROJECT_DETAILS = {
         client: "[HIGHMARK]",
         agency: "[ATAFOLIO]",
         media: [
-            "Images/Projects/Highmark/details/03.png",
-            "Images/Projects/Highmark/details/02.png",
-            "Images/Projects/Highmark/details/01.png",
-            "Images/Projects/Highmark/details/04.png",
-            "Images/Projects/Highmark/details/06.png",
-            "Images/Projects/Highmark/details/07.png",
-            "Images/Projects/Highmark/details/05.png"
+            "Images/Projects/Highmark/details/03.webp",
+            "Images/Projects/Highmark/details/02.webp",
+            "Images/Projects/Highmark/details/01.webp",
+            "Images/Projects/Highmark/details/04.webp",
+            "Images/Projects/Highmark/details/06.webp",
+            "Images/Projects/Highmark/details/07.webp",
+            "Images/Projects/Highmark/details/05.webp"
+        ],
+        mobileMedia: [
+            "Images/Projects/Highmark/mobile-details/03.webp",
+            "Images/Projects/Highmark/mobile-details/02.webp",
+            "Images/Projects/Highmark/mobile-details/01.webp",
+            "Images/Projects/Highmark/mobile-details/04.webp",
+            "Images/Projects/Highmark/mobile-details/06.webp",
+            "Images/Projects/Highmark/mobile-details/07.webp",
+            "Images/Projects/Highmark/mobile-details/05.webp"
         ]
     },
     "macho-genie": {
@@ -174,21 +213,83 @@ const PROJECT_SEQUENCE = [
 ];
 
 const PROJECT_HERO_PRELOADS = new Map();
+const PROJECT_SLIDESHOW_FRAME_PRELOADS = new Map();
 const CASE_STUDY_SLUGS = new Set(['sitch-nyc', 'macho-genie', 'mosu']);
 
 function isMobileViewportActive() {
     return window.matchMedia('(max-width: 768px)').matches;
 }
 
-function getProjectMedia(project, { mobile = isMobileViewportActive() } = {}) {
-    if (!project?.media) return [];
-    if (!mobile) return project.media;
-
-    if (Array.isArray(project.mobileMedia) && project.mobileMedia.length) {
-        return project.mobileMedia;
+function normalizeMediaItem(item, { mobile = isMobileViewportActive() } = {}) {
+    if (typeof item === 'string') {
+        const src = mobile && item.includes('/details/') ? item.replace('/details/', '/mobile-details/') : item;
+        return { type: 'image', src };
     }
 
-    return project.media.map((src) => src.includes('/details/') ? src.replace('/details/', '/mobile-details/') : src);
+    if (!item || typeof item !== 'object') return null;
+
+    if (item.type === 'video') {
+        return {
+            type: 'video',
+            mp4: mobile ? (item.mobileMp4 || item.mp4) : item.mp4,
+            webm: mobile ? (item.mobileWebm || item.webm) : item.webm,
+            poster: mobile ? (item.mobilePoster || item.poster || '') : (item.poster || ''),
+        };
+    }
+
+    return {
+        type: 'image',
+        src: mobile ? (item.mobileSrc || item.src) : item.src
+    };
+}
+
+function getMediaPrimarySrc(item) {
+    if (!item) return '';
+    if (item.type === 'video') return item.poster || item.mp4 || item.webm || '';
+    return item.src || '';
+}
+
+function getProjectMedia(project, { mobile = isMobileViewportActive() } = {}) {
+    if (!project?.media) return [];
+
+    const source = mobile && Array.isArray(project.mobileMedia) && project.mobileMedia.length
+        ? project.mobileMedia
+        : project.media;
+
+    return source
+        .map((item) => normalizeMediaItem(item, { mobile }))
+        .filter(Boolean);
+}
+
+function preloadSlideshowFrame(src) {
+    if (!src) return Promise.resolve();
+    if (PROJECT_SLIDESHOW_FRAME_PRELOADS.has(src)) {
+        return PROJECT_SLIDESHOW_FRAME_PRELOADS.get(src);
+    }
+
+    const preloadPromise = new Promise((resolve) => {
+        const image = new Image();
+        image.decoding = 'async';
+        image.onload = () => {
+            if (typeof image.decode === 'function') {
+                image.decode().catch(() => {}).finally(resolve);
+                return;
+            }
+            resolve();
+        };
+        image.onerror = () => resolve();
+        image.src = src;
+    });
+
+    PROJECT_SLIDESHOW_FRAME_PRELOADS.set(src, preloadPromise);
+    return preloadPromise;
+}
+
+function preloadSlideshowFrames(frames) {
+    if (!Array.isArray(frames) || !frames.length) return;
+    frames.forEach((frame) => {
+        preloadSlideshowFrame(frame);
+    });
 }
 
 function markMediaFrameLoaded(frame) {
@@ -197,11 +298,11 @@ function markMediaFrameLoaded(frame) {
     frame.classList.add('is-media-loaded');
 }
 
-function initMediaLoadFrame(frame, image) {
-    if (!frame || !image) return;
+function initMediaLoadFrame(frame, mediaElement) {
+    if (!frame || !mediaElement) return;
 
     frame.classList.add('media-load-frame');
-    image.classList.add('media-load-target');
+    mediaElement.classList.add('media-load-target');
 
     if (!frame.querySelector('.media-load-spinner')) {
         const spinner = document.createElement('span');
@@ -210,27 +311,37 @@ function initMediaLoadFrame(frame, image) {
         frame.appendChild(spinner);
     }
 
-    if (image.complete) {
-        markMediaFrameLoaded(frame);
-        return;
-    }
-
     frame.classList.add('is-media-loading');
 
     const handleReady = () => {
         markMediaFrameLoaded(frame);
     };
 
-    image.addEventListener('load', handleReady, { once: true });
-    image.addEventListener('error', handleReady, { once: true });
+    if (mediaElement.tagName === 'VIDEO') {
+        if (mediaElement.readyState >= 2) {
+            markMediaFrameLoaded(frame);
+            return;
+        }
+        mediaElement.addEventListener('loadeddata', handleReady, { once: true });
+        mediaElement.addEventListener('error', handleReady, { once: true });
+        return;
+    }
+
+    if (mediaElement.complete) {
+        markMediaFrameLoaded(frame);
+        return;
+    }
+
+    mediaElement.addEventListener('load', handleReady, { once: true });
+    mediaElement.addEventListener('error', handleReady, { once: true });
 }
 
 function initProjectMediaLoaders(root = document) {
     const frames = Array.from(root.querySelectorAll('.case-study-placeholder.has-media, .case-study-media-frame, .project-detail-frame, .project-next-image-window'));
     frames.forEach((frame) => {
-        const image = frame.querySelector('img');
-        if (!image) return;
-        initMediaLoadFrame(frame, image);
+        const mediaElement = frame.querySelector('img, video');
+        if (!mediaElement) return;
+        initMediaLoadFrame(frame, mediaElement);
     });
 }
 
@@ -241,6 +352,22 @@ document.addEventListener("DOMContentLoaded", () => {
     let carouselState = null;
     const isIndexPage = Boolean(indexScroll);
     const isMobileViewport = isMobileViewportActive();
+
+    if (indexScroll) {
+        const initialProjectItem = indexScroll.querySelector('.project-item');
+        if (initialProjectItem) {
+            const initialDesktopFrames = (initialProjectItem.dataset.slideshow || '')
+                .split('|')
+                .map((frame) => frame.trim())
+                .filter(Boolean);
+            const initialMobileFrames = (initialProjectItem.dataset.mobileSlideshow || '')
+                .split('|')
+                .map((frame) => frame.trim())
+                .filter(Boolean);
+            preloadSlideshowFrames([...initialDesktopFrames, ...initialMobileFrames]);
+        }
+    }
+
     if (typeof gsap !== 'undefined') {
         if (indexScroll && !isMobileViewport) {
             carouselState = initHorizontalScroll(indexScroll);
@@ -267,6 +394,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (document.body.classList.contains('project-page') && isMobileViewport) {
         initMobileProjectPageScroll();
+        if (document.body.classList.contains('case-study-page')) {
+            initCaseStudyMobileLightboxLazy();
+        }
     }
 
     initPlayPageTransition();
@@ -288,9 +418,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     
-    // Update every second
-    setInterval(updateClock, 1000);
-    updateClock(); // Initial call
+    if (isIndexPage) {
+        setInterval(updateClock, 1000);
+        updateClock();
+    }
 
     // --- Stepped Trackpad/Mouse Wheel Navigation ---
     let lastCarouselStepAt = 0;
@@ -425,7 +556,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (storedPreference === 'manual-on') return true;
         if (storedPreference === 'manual-off') return false;
 
-        return false;
+        return isChicagoNightTime();
     }
 
     function updateThemeColorMeta(shouldUseDarkMode) {
@@ -502,9 +633,19 @@ document.addEventListener("DOMContentLoaded", () => {
     function initHistoryNavigationRecovery() {
         window.addEventListener('pageshow', (event) => {
             const body = document.body;
+            const transitionOverlay = document.getElementById('play-page-transition-overlay');
 
             body.classList.remove('page-transitioning-to-play', 'project-card-transitioning');
             document.documentElement.classList.remove('project-transition-pending');
+            body.classList.remove('index-intro-pending');
+            applyScheduledTheme();
+
+            if (transitionOverlay) {
+                transitionOverlay.style.display = 'none';
+                transitionOverlay.style.opacity = '0';
+                transitionOverlay.style.visibility = 'hidden';
+                transitionOverlay.style.transform = 'translateY(100%)';
+            }
 
             if (event.persisted && body.classList.contains('index-page')) {
                 body.classList.remove('index-intro-active');
@@ -628,7 +769,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (CASE_STUDY_SLUGS.has(slug) && body.classList.contains('case-study-page')) {
             initCaseStudyPageTransition(slug);
-            initProjectMediaLoaders();
             return;
         }
 
@@ -675,20 +815,53 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!mediaEl) return;
 
         mediaEl.innerHTML = '';
-        getProjectMedia(project).forEach((src, index) => {
+        getProjectMedia(project).forEach((mediaItem, index) => {
             const frame = document.createElement('figure');
             frame.className = `project-detail-frame${index === 0 ? ' project-detail-frame-hero' : ''}`;
 
-            const image = document.createElement('img');
-            image.className = 'project-detail-image';
-            image.src = src;
-            image.alt = `${project.title} visual ${index + 1}`;
-            image.loading = index === 0 ? 'eager' : 'lazy';
-            image.decoding = 'async';
+            let mediaElement;
+            if (mediaItem.type === 'video') {
+                const video = document.createElement('video');
+                video.className = 'project-detail-image project-detail-video';
+                video.autoplay = true;
+                video.muted = true;
+                video.loop = true;
+                video.playsInline = true;
+                video.preload = 'metadata';
+                video.setAttribute('aria-label', `${project.title} motion ${index + 1}`);
+                video.disablePictureInPicture = true;
+                if (mediaItem.poster) video.poster = mediaItem.poster;
 
-            frame.appendChild(image);
+                if (mediaItem.webm) {
+                    const webmSource = document.createElement('source');
+                    webmSource.src = mediaItem.webm;
+                    webmSource.type = 'video/webm';
+                    video.appendChild(webmSource);
+                }
+                if (mediaItem.mp4) {
+                    const mp4Source = document.createElement('source');
+                    mp4Source.src = mediaItem.mp4;
+                    mp4Source.type = 'video/mp4';
+                    video.appendChild(mp4Source);
+                }
+
+                mediaElement = video;
+            } else {
+                const image = document.createElement('img');
+                image.className = 'project-detail-image';
+                image.src = mediaItem.src;
+                image.alt = `${project.title} visual ${index + 1}`;
+                image.loading = index === 0 ? 'eager' : 'lazy';
+                image.decoding = 'async';
+                mediaElement = image;
+            }
+
+            frame.appendChild(mediaElement);
             mediaEl.appendChild(frame);
-            initMediaLoadFrame(frame, image);
+            initMediaLoadFrame(frame, mediaElement);
+            if (mediaItem.type === 'video') {
+                mediaElement.play?.().catch(() => {});
+            }
         });
 
         const titleBlock = document.querySelector('.project-detail-title-block');
@@ -759,7 +932,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const targetImage = heroFrame.querySelector('.project-detail-image');
-        if (!targetImage) {
+        if (!targetImage || targetImage.tagName !== 'IMG') {
             clearProjectTransition();
             document.documentElement.classList.remove('project-transition-pending');
             body.classList.remove('project-detail-load-pending');
@@ -872,6 +1045,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const existing = main.querySelector('.project-next-section');
         if (existing) existing.remove();
+        const existingSentinel = main.querySelector('.project-next-auto-advance-sentinel');
+        if (existingSentinel) existingSentinel.remove();
 
         const currentIndex = PROJECT_SEQUENCE.findIndex((project) => project.slug === currentSlug);
         if (currentIndex === -1) return;
@@ -881,11 +1056,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!nextProject) return;
 
         const nextMedia = getProjectMedia(nextProject, { mobile: false });
-        const nextImage = nextMedia[0];
+        const nextImage = getMediaPrimarySrc(nextMedia[0]);
         if (!nextImage) return;
 
         const section = document.createElement('section');
         section.className = 'project-next-section';
+
+        const navigateToNextProject = () => {
+            if (navigateToNextProject.didNavigate) return;
+            navigateToNextProject.didNavigate = true;
+            sessionStorage.removeItem('project-transition');
+            window.location.href = nextProjectRef.url;
+        };
 
         const link = document.createElement('a');
         link.className = 'project-next-link';
@@ -931,7 +1113,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             event.preventDefault();
             if (typeof gsap === 'undefined') {
-                window.location.href = nextProjectRef.url;
+                navigateToNextProject();
                 return;
             }
 
@@ -944,9 +1126,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ].filter(Boolean);
 
             gsap.timeline({
-                onComplete: () => {
-                    window.location.href = nextProjectRef.url;
-                }
+                onComplete: navigateToNextProject
             }).to(fadeTargets, {
                 opacity: 0,
                 duration: 0.28,
@@ -957,6 +1137,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
         section.appendChild(link);
         main.appendChild(section);
+
+        if (document.body.classList.contains('case-study-page') && isMobileViewportActive()) {
+            const sentinel = document.createElement('div');
+            sentinel.className = 'project-next-auto-advance-sentinel';
+            sentinel.setAttribute('aria-hidden', 'true');
+            sentinel.style.width = '1px';
+            sentinel.style.height = '1px';
+            sentinel.style.flex = '0 0 1px';
+            sentinel.style.pointerEvents = 'none';
+            main.appendChild(sentinel);
+
+            const observer = new IntersectionObserver((entries) => {
+                const entry = entries[0];
+                if (!entry?.isIntersecting) return;
+                observer.disconnect();
+                navigateToNextProject();
+            }, {
+                root: main,
+                threshold: 0.01
+            });
+
+            observer.observe(sentinel);
+        }
     }
 
     function initPolkaDots() {
@@ -1228,9 +1431,183 @@ function initMobileCarouselTouchState() {
     let startIndex = 0;
     let tappedItem = null;
     let moved = false;
+    let centeredUpdateFrame = null;
+    let activeSlideshowItem = null;
+    let activeSlideshowInterval = null;
     const dragMultiplier = 1.18;
     const advanceThresholdRatio = 0.12;
     const snapDelayMs = 36;
+
+    const allItems = () => Array.from(scrollContent.querySelectorAll('.project-item'));
+
+    const ensureOverlayImage = (baseImage) => {
+        const wrapper = baseImage.closest('.project-image-wrapper');
+        if (!wrapper) return null;
+
+        let overlayImage = wrapper.querySelector('.project-image-overlay');
+        if (!overlayImage) {
+            overlayImage = baseImage.cloneNode(false);
+            overlayImage.classList.add('project-image-overlay');
+            overlayImage.alt = '';
+            overlayImage.setAttribute('aria-hidden', 'true');
+            overlayImage.removeAttribute('srcset');
+            overlayImage.removeAttribute('sizes');
+            wrapper.appendChild(overlayImage);
+        }
+
+        return overlayImage;
+    };
+
+    const disableResponsiveProjectImage = (image) => {
+        if (!image) return;
+        image.removeAttribute('srcset');
+        image.removeAttribute('sizes');
+    };
+
+    const stopCenteredSlideshow = () => {
+        if (activeSlideshowInterval) {
+            window.clearInterval(activeSlideshowInterval);
+            activeSlideshowInterval = null;
+        }
+
+        if (activeSlideshowItem) {
+            const image = activeSlideshowItem.querySelector('.project-image');
+            const overlayImage = activeSlideshowItem.querySelector('.project-image-overlay');
+            if (overlayImage && typeof gsap !== 'undefined') {
+                gsap.killTweensOf(overlayImage);
+                gsap.set(overlayImage, { opacity: 0 });
+            } else if (overlayImage) {
+                overlayImage.style.opacity = '0';
+            }
+
+            if (image && image.dataset.defaultSrc) {
+                image.src = image.dataset.defaultSrc;
+                image.style.opacity = '1';
+            }
+        }
+
+        activeSlideshowItem = null;
+    };
+
+    const swapProjectImage = (image, nextSrc, useFade = true) => {
+        if (!image || !nextSrc || image.src.endsWith(nextSrc)) return;
+        disableResponsiveProjectImage(image);
+        const overlayImage = ensureOverlayImage(image);
+        if (!overlayImage) {
+            image.src = nextSrc;
+            return;
+        }
+        disableResponsiveProjectImage(overlayImage);
+        image.dataset.requestedSlideshowSrc = nextSrc;
+
+        const applySwap = () => {
+            if (image.dataset.requestedSlideshowSrc !== nextSrc) return;
+            if (!useFade || typeof gsap === 'undefined') {
+                image.src = nextSrc;
+                image.style.opacity = '1';
+                overlayImage.style.opacity = '0';
+                return;
+            }
+
+            gsap.killTweensOf([image, overlayImage]);
+            overlayImage.src = nextSrc;
+            gsap.set(image, { opacity: 1 });
+            gsap.set(overlayImage, { opacity: 0 });
+            gsap.to(overlayImage, {
+                opacity: 1,
+                duration: 0.24,
+                ease: 'power2.out',
+                onComplete: () => {
+                    if (image.dataset.requestedSlideshowSrc !== nextSrc) return;
+                    image.src = nextSrc;
+                    gsap.set(overlayImage, { opacity: 0 });
+                    gsap.set(image, { opacity: 1 });
+                }
+            });
+        };
+        preloadSlideshowFrame(nextSrc).then(applySwap);
+    };
+
+    const startCenteredSlideshow = (item) => {
+        stopCenteredSlideshow();
+        if (!item) return;
+
+        const image = item.querySelector('.project-image');
+        if (!image) return;
+
+        if (!image.dataset.defaultSrc) {
+            image.dataset.defaultSrc = image.currentSrc || image.src;
+        }
+
+        if (document.body.classList.contains('index-intro-active')) {
+            swapProjectImage(image, image.dataset.defaultSrc, false);
+            return;
+        }
+
+        const slideshowValue = item.dataset.mobileSlideshow || item.dataset.slideshow;
+        if (!slideshowValue) {
+            swapProjectImage(image, image.dataset.defaultSrc, false);
+            return;
+        }
+
+        const frames = slideshowValue.split('|').map((frame) => frame.trim()).filter(Boolean);
+        if (frames.length <= 1) {
+            swapProjectImage(image, frames[0] || image.dataset.defaultSrc, false);
+            return;
+        }
+
+        activeSlideshowItem = item;
+        let frameIndex = 0;
+        swapProjectImage(image, frames[frameIndex], false);
+        Promise.all(frames.map((frame) => preloadSlideshowFrame(frame))).then(() => {
+            if (activeSlideshowItem !== item) return;
+            activeSlideshowInterval = window.setInterval(() => {
+                if (activeSlideshowItem !== item) return;
+                frameIndex = (frameIndex + 1) % frames.length;
+                swapProjectImage(image, frames[frameIndex], true);
+            }, 1400);
+        });
+    };
+
+    const getClosestItem = () => {
+        const items = allItems();
+        if (!items.length) return null;
+
+        const viewportCenter = scrollContainer.clientWidth / 2;
+        let closestItem = items[0];
+        let minDistance = Infinity;
+
+        items.forEach((item) => {
+            const itemCenter = item.offsetLeft + (item.offsetWidth / 2) - scrollContainer.scrollLeft;
+            const distance = Math.abs(itemCenter - viewportCenter);
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestItem = item;
+            }
+        });
+
+        return closestItem;
+    };
+
+    const updateCenteredItem = () => {
+        centeredUpdateFrame = null;
+        const nextCenteredItem = getClosestItem();
+        if (!nextCenteredItem) return;
+
+        allItems().forEach((item) => {
+            item.classList.toggle('is-centered', item === nextCenteredItem);
+        });
+
+        if (activeSlideshowItem === nextCenteredItem && activeSlideshowInterval) return;
+        startCenteredSlideshow(nextCenteredItem);
+    };
+
+    const scheduleCenteredItemUpdate = () => {
+        if (centeredUpdateFrame) {
+            cancelAnimationFrame(centeredUpdateFrame);
+        }
+        centeredUpdateFrame = requestAnimationFrame(updateCenteredItem);
+    };
 
     const clearReleaseTimeout = () => {
         if (releaseTimeout) {
@@ -1354,6 +1731,7 @@ function initMobileCarouselTouchState() {
     scrollContainer.addEventListener('scroll', () => {
         setActive();
         scheduleRelease();
+        scheduleCenteredItemUpdate();
     }, { passive: true });
 
     scrollContainer.addEventListener('pointerdown', (event) => {
@@ -1381,6 +1759,18 @@ function initMobileCarouselTouchState() {
             event.stopPropagation();
         }
     }, true);
+
+    window.addEventListener('indexIntroComplete', () => {
+        scheduleCenteredItemUpdate();
+    });
+
+    window.addEventListener('resize', () => {
+        scheduleCenteredItemUpdate();
+    });
+
+    requestAnimationFrame(() => {
+        scheduleCenteredItemUpdate();
+    });
 }
 
 function initMobileProjectLinks() {
@@ -1496,7 +1886,9 @@ function initMobileProjectPageScroll() {
     const isCaseStudy = document.body.classList.contains('case-study-page');
 
     if (isCaseStudy) {
-        const slides = Array.from(scrollRoot.querySelectorAll('.case-study-slide'));
+        const slides = Array.from(scrollRoot.querySelectorAll('.case-study-slide')).filter((slide) => {
+            return window.getComputedStyle(slide).display !== 'none';
+        });
         if (!slides.length) return;
         let tickItems = [];
         let activeTickPointerId = null;
@@ -1716,6 +2108,300 @@ function initMobileProjectPageScroll() {
     scrollRoot.addEventListener('pointerleave', endDrag);
 }
 
+function initCaseStudyMobileLightboxLazy() {
+    if (!document.body.classList.contains('case-study-page') || !isMobileViewportActive()) return;
+
+    const handleFirstOpen = (event) => {
+        const sourceImage = event.target.closest('.case-study-media-frame .case-study-placeholder-image');
+        if (!sourceImage) return;
+        event.preventDefault();
+        document.removeEventListener('click', handleFirstOpen, true);
+        initCaseStudyMobileLightbox(sourceImage);
+    };
+
+    document.addEventListener('click', handleFirstOpen, true);
+}
+
+function initCaseStudyMobileLightbox(initialSource = null) {
+    if (!document.body.classList.contains('case-study-page') || !isMobileViewportActive()) return;
+
+    const existingOverlay = document.querySelector('.case-study-lightbox');
+    if (existingOverlay) {
+        if (initialSource) {
+            const event = new Event('click', { bubbles: false, cancelable: true });
+            initialSource.dispatchEvent(event);
+        }
+        return;
+    }
+
+    const sourceImages = Array.from(document.querySelectorAll('.case-study-media-frame .case-study-placeholder-image'));
+    if (!sourceImages.length) return;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'case-study-lightbox';
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.innerHTML = `
+        <div class="case-study-lightbox-media">
+            <img class="case-study-lightbox-image" alt="">
+        </div>
+    `;
+    document.body.appendChild(overlay);
+
+    const media = overlay.querySelector('.case-study-lightbox-media');
+    const image = overlay.querySelector('.case-study-lightbox-image');
+    if (!media || !image) return;
+
+    let activeSource = null;
+    let isOpen = false;
+    let baseWidth = 0;
+    let baseHeight = 0;
+    let pointerDownTime = 0;
+    let movedSincePointerDown = false;
+    let pinchStartDistance = 0;
+    let pinchStartScale = 1;
+    let panOriginX = 0;
+    let panOriginY = 0;
+    let panStartOffsetX = 0;
+    let panStartOffsetY = 0;
+    const pointers = new Map();
+    const transformState = { x: 0, y: 0, scale: 1 };
+
+    const clampScale = (value) => Math.min(4, Math.max(1, value));
+
+    const getDistance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+
+    const getContainedSize = (naturalWidth, naturalHeight) => {
+        const maxWidth = window.innerWidth - 24;
+        const maxHeight = window.innerHeight - 24;
+        const aspect = naturalWidth / naturalHeight;
+        let width = maxWidth;
+        let height = width / aspect;
+
+        if (height > maxHeight) {
+            height = maxHeight;
+            width = height * aspect;
+        }
+
+        return { width, height };
+    };
+
+    const applyTransform = () => {
+        media.style.width = `${baseWidth}px`;
+        media.style.height = `${baseHeight}px`;
+        media.style.transform = `translate3d(calc(-50% + ${transformState.x}px), calc(-50% + ${transformState.y}px), 0) scale(${transformState.scale})`;
+    };
+
+    const animateToTransform = (nextX, nextY, nextScale, duration = 0.24) => {
+        if (typeof gsap === 'undefined') {
+            transformState.x = nextX;
+            transformState.y = nextY;
+            transformState.scale = nextScale;
+            applyTransform();
+            return;
+        }
+
+        gsap.to(transformState, {
+            x: nextX,
+            y: nextY,
+            scale: nextScale,
+            duration,
+            ease: 'power3.out',
+            onUpdate: applyTransform
+        });
+    };
+
+    const closeLightbox = () => {
+        if (!isOpen) return;
+
+        const finishClose = () => {
+            overlay.classList.remove('active');
+            overlay.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('case-study-lightbox-open');
+            image.removeAttribute('src');
+            image.removeAttribute('srcset');
+            activeSource = null;
+            isOpen = false;
+            pointers.clear();
+            movedSincePointerDown = false;
+            transformState.x = 0;
+            transformState.y = 0;
+            transformState.scale = 1;
+            media.style.width = '';
+            media.style.height = '';
+            media.style.transform = '';
+        };
+
+        if (typeof gsap === 'undefined') {
+            finishClose();
+            return;
+        }
+
+        gsap.killTweensOf([overlay, transformState]);
+        gsap.to(overlay, {
+            autoAlpha: 0,
+            duration: 0.18,
+            ease: 'power2.out',
+            onComplete: finishClose
+        });
+    };
+
+    const openLightbox = (sourceImage) => {
+        const naturalWidth = sourceImage.naturalWidth || sourceImage.width;
+        const naturalHeight = sourceImage.naturalHeight || sourceImage.height;
+        if (!naturalWidth || !naturalHeight) return;
+
+        activeSource = sourceImage;
+        isOpen = true;
+        movedSincePointerDown = false;
+        pointers.clear();
+
+        const sourceRect = sourceImage.getBoundingClientRect();
+        const fittedSize = getContainedSize(naturalWidth, naturalHeight);
+        baseWidth = fittedSize.width;
+        baseHeight = fittedSize.height;
+        image.src = sourceImage.currentSrc || sourceImage.src;
+        image.alt = sourceImage.alt || '';
+
+        const viewportCenterX = window.innerWidth / 2;
+        const viewportCenterY = window.innerHeight / 2;
+        const sourceCenterX = sourceRect.left + (sourceRect.width / 2);
+        const sourceCenterY = sourceRect.top + (sourceRect.height / 2);
+        const startScale = Math.min(sourceRect.width / baseWidth, sourceRect.height / baseHeight) || 1;
+
+        transformState.x = sourceCenterX - viewportCenterX;
+        transformState.y = sourceCenterY - viewportCenterY;
+        transformState.scale = startScale;
+
+        overlay.classList.add('active');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('case-study-lightbox-open');
+
+        if (typeof gsap !== 'undefined') {
+            gsap.set(overlay, { autoAlpha: 0 });
+        }
+
+        applyTransform();
+
+        if (typeof gsap === 'undefined') {
+            overlay.style.opacity = '1';
+            overlay.style.visibility = 'visible';
+            animateToTransform(0, 0, 1, 0);
+            return;
+        }
+
+        gsap.killTweensOf([overlay, transformState]);
+        gsap.to(overlay, {
+            autoAlpha: 1,
+            duration: 0.22,
+            ease: 'power2.out'
+        });
+        animateToTransform(0, 0, 1, 0.28);
+    };
+
+    const resetSinglePointerOrigin = () => {
+        const [remainingPointer] = pointers.values();
+        if (!remainingPointer) return;
+        panOriginX = remainingPointer.x;
+        panOriginY = remainingPointer.y;
+        panStartOffsetX = transformState.x;
+        panStartOffsetY = transformState.y;
+    };
+
+    sourceImages.forEach((sourceImage) => {
+        sourceImage.addEventListener('click', (event) => {
+            if (!isMobileViewportActive()) return;
+            event.preventDefault();
+            openLightbox(sourceImage);
+        });
+    });
+
+    if (initialSource) {
+        openLightbox(initialSource);
+    }
+
+    overlay.addEventListener('pointerdown', (event) => {
+        if (!isOpen) return;
+        event.preventDefault();
+        pointerDownTime = performance.now();
+        movedSincePointerDown = false;
+        pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+        overlay.setPointerCapture(event.pointerId);
+
+        if (pointers.size === 1) {
+            panOriginX = event.clientX;
+            panOriginY = event.clientY;
+            panStartOffsetX = transformState.x;
+            panStartOffsetY = transformState.y;
+        } else if (pointers.size === 2) {
+            const [first, second] = Array.from(pointers.values());
+            pinchStartDistance = getDistance(first, second);
+            pinchStartScale = transformState.scale;
+        }
+    });
+
+    overlay.addEventListener('pointermove', (event) => {
+        if (!isOpen || !pointers.has(event.pointerId)) return;
+        event.preventDefault();
+        pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+        if (pointers.size >= 2) {
+            const [first, second] = Array.from(pointers.values());
+            const nextDistance = getDistance(first, second);
+            if (!pinchStartDistance) {
+                pinchStartDistance = nextDistance;
+                pinchStartScale = transformState.scale;
+            }
+            const nextScale = clampScale(pinchStartScale * (nextDistance / pinchStartDistance));
+            if (Math.abs(nextScale - transformState.scale) > 0.01) {
+                movedSincePointerDown = true;
+            }
+            transformState.scale = nextScale;
+            applyTransform();
+            return;
+        }
+
+        const dx = event.clientX - panOriginX;
+        const dy = event.clientY - panOriginY;
+        if (Math.abs(dx) > 6 || Math.abs(dy) > 6 || transformState.scale > 1.02) {
+            movedSincePointerDown = true;
+        }
+
+        if (transformState.scale > 1.001) {
+            transformState.x = panStartOffsetX + dx;
+            transformState.y = panStartOffsetY + dy;
+            applyTransform();
+        }
+    });
+
+    const releasePointer = (event) => {
+        if (!isOpen || !pointers.has(event.pointerId)) return;
+        event.preventDefault();
+        pointers.delete(event.pointerId);
+
+        if (pointers.size === 1) {
+            pinchStartDistance = 0;
+            pinchStartScale = transformState.scale;
+            resetSinglePointerOrigin();
+            return;
+        }
+
+        if (pointers.size > 1) return;
+
+        const isTap = !movedSincePointerDown && (performance.now() - pointerDownTime) < 260;
+        if (isTap) {
+            closeLightbox();
+            return;
+        }
+
+        if (transformState.scale <= 1.02) {
+            animateToTransform(0, 0, 1);
+        }
+    };
+
+    overlay.addEventListener('pointerup', releasePointer);
+    overlay.addEventListener('pointercancel', releasePointer);
+}
+
 function initIndexIntro() {
     const body = document.body;
     if (!body.classList.contains('index-page')) return;
@@ -1727,6 +2413,7 @@ function initIndexIntro() {
     const introLoadingFill = document.getElementById('intro-loading-fill');
     const targetWordmark = document.getElementById('watermark-text-large');
     const motionShell = document.getElementById('watermark-motion-shell');
+    const mainFooter = document.getElementById('main-footer');
     const introWords = motionShell ? Array.from(motionShell.querySelectorAll('.watermark-word-mask > .ata-text, .watermark-word-mask > .berkol-text')) : [];
     const scrollContainer = document.querySelector('.scroll-container');
     const mobileLoremBand = document.querySelector('.mobile-lorem-band');
@@ -1801,7 +2488,7 @@ function initIndexIntro() {
         const allThumbnailWrappers = scrollContainer ? Array.from(scrollContainer.querySelectorAll('.project-image-wrapper')) : [];
         const allThumbnailImages = scrollContainer ? Array.from(scrollContainer.querySelectorAll('.project-image')) : [];
         const allProjectMeta = scrollContainer ? Array.from(scrollContainer.querySelectorAll('.project-meta.top-meta')) : [];
-        gsap.set([targetWordmark, motionShell, scrollContainer, mobileLoremBand, ...introWords, ...allThumbnailWrappers, ...allThumbnailImages, ...staticRevealTargets, ...allProjectMeta, ...mobileLoremInners], { clearProps: 'opacity,visibility,pointerEvents,transform,transformOrigin,clipPath' });
+        gsap.set([mainFooter, targetWordmark, motionShell, scrollContainer, mobileLoremBand, ...introWords, ...allThumbnailWrappers, ...allThumbnailImages, ...staticRevealTargets, ...allProjectMeta, ...mobileLoremInners], { clearProps: 'opacity,visibility,pointerEvents,transform,transformOrigin,clipPath' });
         window.dispatchEvent(new CustomEvent('indexIntroComplete'));
     };
 
@@ -1867,6 +2554,9 @@ function initIndexIntro() {
                 });
 
                 gsap.set(introWords, { yPercent: 112 });
+                if (mainFooter) {
+                    gsap.set(mainFooter, { autoAlpha: 1, pointerEvents: 'none' });
+                }
                 gsap.set(targetWordmark, {
                     autoAlpha: 1,
                     transformOrigin: 'top left'
@@ -1980,7 +2670,7 @@ function preloadProjectHero(slug) {
         return PROJECT_HERO_PRELOADS.get(slug);
     }
 
-    const heroSrc = getProjectMedia(PROJECT_DETAILS[slug], { mobile: isMobileViewportActive() })[0];
+    const heroSrc = getMediaPrimarySrc(getProjectMedia(PROJECT_DETAILS[slug], { mobile: isMobileViewportActive() })[0]);
     if (!heroSrc) return null;
 
     const preload = new Promise((resolve) => {
@@ -2011,6 +2701,7 @@ function initCaseStudyPageTransition(slug) {
     const year = document.querySelector('.case-study-year');
     const indexBlock = document.querySelector('.case-study-index');
     const overviewDesktop = document.querySelector('.case-study-overview-desktop');
+    const introOverviewMedia = document.querySelector('.case-study-intro-overview-media');
     const heroMeta = document.querySelector('.case-study-hero > .case-study-meta');
     const slideTargets = Array.from(document.querySelectorAll('.case-study-slide:not(.case-study-slide-intro)'));
     const introRevealTargets = [indexBlock, overviewDesktop].filter((element) => {
@@ -2021,13 +2712,17 @@ function initCaseStudyPageTransition(slug) {
         if (!element) return false;
         return window.getComputedStyle(element).display !== 'none';
     });
+    const introMediaTargets = [introOverviewMedia].filter((element) => {
+        if (!element) return false;
+        return window.getComputedStyle(element).display !== 'none';
+    });
     const hasMatchingTransition = Boolean(transitionData && transitionData.slug === slug);
 
     const cleanup = () => {
         clearProjectTransition();
         document.documentElement.classList.remove('project-transition-pending');
         body.classList.remove('case-study-load-pending');
-        gsap.set([kicker, title, year, ...introRevealTargets, ...revealTargets], { clearProps: 'opacity,visibility,transform' });
+        gsap.set([kicker, title, year, ...introRevealTargets, ...introMediaTargets, ...revealTargets], { clearProps: 'opacity,visibility,transform' });
     };
 
     if (!title || !year) {
@@ -2037,6 +2732,7 @@ function initCaseStudyPageTransition(slug) {
 
     gsap.set(kicker, { autoAlpha: 0, y: 12 });
     gsap.set(introRevealTargets, { autoAlpha: 0, y: 24 });
+    gsap.set(introMediaTargets, { autoAlpha: 0, y: 24 });
     gsap.set(revealTargets, { autoAlpha: 0, y: 24 });
     gsap.set([title, year], { autoAlpha: 0 });
 
@@ -2064,6 +2760,12 @@ function initCaseStudyPageTransition(slug) {
             duration: 0.46,
             ease: 'power2.out'
         }, '+=0.16')
+        .to(introMediaTargets, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.4,
+            ease: 'power2.out'
+        }, '+=0.12')
         .to(revealTargets, {
             autoAlpha: 1,
             y: 0,
@@ -2100,6 +2802,12 @@ function initCaseStudyPageTransition(slug) {
             duration: 0.46,
             ease: 'power2.out'
         }, '+=0.16')
+        .to(introMediaTargets, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.4,
+            ease: 'power2.out'
+        }, '+=0.12')
         .to(revealTargets, {
             autoAlpha: 1,
             y: 0,
@@ -2289,21 +2997,33 @@ function initHorizontalScroll(scrollContent) {
             overlayImage.classList.add('project-image-overlay');
             overlayImage.alt = '';
             overlayImage.setAttribute('aria-hidden', 'true');
+            overlayImage.removeAttribute('srcset');
+            overlayImage.removeAttribute('sizes');
             wrapper.appendChild(overlayImage);
         }
 
         return overlayImage;
     };
 
+    const disableResponsiveProjectImage = (image) => {
+        if (!image) return;
+        image.removeAttribute('srcset');
+        image.removeAttribute('sizes');
+    };
+
     const swapProjectImage = (image, nextSrc, useFade = true) => {
         if (!image || !nextSrc || image.src.endsWith(nextSrc)) return;
+        disableResponsiveProjectImage(image);
         const overlayImage = ensureOverlayImage(image);
         if (!overlayImage) {
             image.src = nextSrc;
             return;
         }
+        disableResponsiveProjectImage(overlayImage);
+        image.dataset.requestedSlideshowSrc = nextSrc;
 
         const applySwap = () => {
+            if (image.dataset.requestedSlideshowSrc !== nextSrc) return;
             if (!useFade) {
                 image.src = nextSrc;
                 image.style.opacity = '1';
@@ -2313,22 +3033,21 @@ function initHorizontalScroll(scrollContent) {
 
             gsap.killTweensOf([image, overlayImage]);
             overlayImage.src = nextSrc;
-            overlayImage.style.opacity = '0';
+            gsap.set(image, { opacity: 1 });
+            gsap.set(overlayImage, { opacity: 0 });
             gsap.to(overlayImage, {
                 opacity: 1,
-                duration: 0.12,
-                ease: "power1.out",
+                duration: 0.24,
+                ease: "power2.out",
                 onComplete: () => {
+                    if (image.dataset.requestedSlideshowSrc !== nextSrc) return;
                     image.src = nextSrc;
-                    overlayImage.style.opacity = '0';
-                    image.style.opacity = '1';
+                    gsap.set(overlayImage, { opacity: 0 });
+                    gsap.set(image, { opacity: 1 });
                 }
             });
         };
-
-        const preload = new Image();
-        preload.onload = applySwap;
-        preload.src = nextSrc;
+        preloadSlideshowFrame(nextSrc).then(applySwap);
     };
 
     const updateCenteredSlideshow = () => {
@@ -2348,7 +3067,9 @@ function initHorizontalScroll(scrollContent) {
             return;
         }
 
-        const slideshowValue = centeredItem.dataset.slideshow;
+        const slideshowValue = window.innerWidth <= 768 && centeredItem.dataset.mobileSlideshow
+            ? centeredItem.dataset.mobileSlideshow
+            : centeredItem.dataset.slideshow;
         if (!slideshowValue) {
             swapProjectImage(image, image.dataset.defaultSrc, false);
             return;
@@ -2363,11 +3084,14 @@ function initHorizontalScroll(scrollContent) {
         state.activeSlideshowItem = centeredItem;
         let frameIndex = 0;
         swapProjectImage(image, frames[frameIndex], false);
-        state.activeSlideshowInterval = window.setInterval(() => {
+        Promise.all(frames.map((frame) => preloadSlideshowFrame(frame))).then(() => {
             if (state.activeSlideshowItem !== centeredItem) return;
-            frameIndex = (frameIndex + 1) % frames.length;
-            swapProjectImage(image, frames[frameIndex], true);
-        }, 650);
+            state.activeSlideshowInterval = window.setInterval(() => {
+                if (state.activeSlideshowItem !== centeredItem) return;
+                frameIndex = (frameIndex + 1) % frames.length;
+                swapProjectImage(image, frames[frameIndex], true);
+            }, 1400);
+        });
     };
 
     window.addEventListener('indexIntroComplete', () => {

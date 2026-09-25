@@ -10,7 +10,13 @@
             const key = 'atafolio-dark-mode-preference';
             try {
                 const stored = window.localStorage.getItem(key);
-                if (stored === 'manual-on') document.documentElement.classList.add('dark-mode-boot');
+                const hour = Number(new Intl.DateTimeFormat('en-US', {
+                    timeZone: 'America/Chicago',
+                    hour: 'numeric',
+                    hour12: false
+                }).format(new Date()));
+                const shouldUseDark = stored === 'manual-on' || (stored !== 'manual-off' && (hour >= 19 || hour < 6));
+                if (shouldUseDark) document.documentElement.classList.add('dark-mode-boot');
             } catch {}
         })();
     </script>
@@ -31,7 +37,7 @@
             <div class="nav-link-wrapper"><a href="index.html" class="nav-link">Index</a><a href="index.html" class="nav-link" aria-hidden="true">Index</a></div>,
             <div class="nav-link-wrapper"><a href="lab.html" class="nav-link">Play</a><a href="lab.html" class="nav-link" aria-hidden="true">Play</a></div>
         </div>
-        <div class="contact-link"><div class="nav-link-wrapper"><a href="mailto:hello@example.com" class="underline-link">Send me a message</a><a href="mailto:hello@example.com" class="underline-link" aria-hidden="true">Send me a message</a></div></div>
+        <div class="contact-link"><div class="nav-link-wrapper"><a href="mailto:ataberkol@outlook.com" class="underline-link">Send me a message</a><a href="mailto:ataberkol@outlook.com" class="underline-link" aria-hidden="true">Send me a message</a></div></div>
     </header>
     <main class="project-detail-main">
         <section class="project-detail-hero">

@@ -3,6 +3,10 @@ node_modules/
 .netlify/
 dist/
 build/
-Images/
+Images/*
+!Images/Projects/
+!Images/Projects/**
+Images/Projects/**/.DS_Store
+Images/Projects/.DS_Store
 Inspo/
 fonts/
